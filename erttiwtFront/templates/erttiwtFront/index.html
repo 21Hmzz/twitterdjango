@@ -5,10 +5,7 @@
 
 {% block content %}
     <div class="header_info">
-        <h2>Nouveau réseau social !</h2>
-
-        <p>Vous pouvez vous inscrire ou vous connecter pour accéder au site.</p>
-        <p>Vous pouvez aussi voir les derniers Tweets des utilisateurs.</p>
+        <h2 class="appli_name">ErttiwT</h2>
     </div>
 
     <div class="content">
@@ -58,6 +55,15 @@
         <div class="tweet_likes_retweets">
             <i class='bx bx-heart bx-sm'></i><p>{{ Tweet.likes }}</p>
             <i class='bx bx-recycle bx-sm'></i><p>{{ Tweet.retwitts }}</p>
+            <i class='bx bx-comment bx-sm'></i><p>{{ Tweet.commentaires|length }}</p>
+        </div>
+        <div class="commentaires">
+            {% for commentaire in Tweet.commentaires %}
+            <div class="commentaire_content">
+            <img src="{% static 'erttiwtFront/img/defaut.jpg' %}" alt="image de profil" class="profil_image">
+                {{ commentaire.commentaire }}
+            </div>
+            {% endfor %}
         </div>
     </div>
     {% endfor %}

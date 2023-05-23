@@ -6,6 +6,9 @@ from erttiwtFront.models import Twitt,Commentaire
 def index(request):
 
     Twitts =  Twitt.objects.all()
-    Commentaires = Commentaire.objects.all()
+    for twitt in Twitts:
+        twitt.commentaires = Commentaire.objects.filter(twitt=twitt.idTwitt)
+        
 
-    return render(request, 'erttiwtFront/index.html', {'Tweets': Twitts, 'Commentaires': Commentaires})
+
+    return render(request, 'erttiwtFront/index.html', {'Tweets': Twitts})
