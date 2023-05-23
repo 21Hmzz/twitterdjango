@@ -1,0 +1,146 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,200;0,400;1,300;1,400;1,600&display=swap');
+html,body{
+    background-color: #141d26;
+    color: #fff;
+    font-family: 'Source Sans Pro', sans-serif;
+    width: 100%;
+}
+a{
+    color: #c51f5d;
+    text-decoration: none;
+}
+/* header */
+.header_info{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+/* content */
+.content{
+    display: flex;
+    flex-direction: row;
+}
+
+/* sidebar */
+.toFollow{
+    width: 20%;
+    padding: 15px
+}
+.toFollow .profil_image{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 20px;
+}
+.toFollow li {
+    display: flex;
+    align-items: center;
+}
+.toFollow p {
+    font-weight: 600;
+    font-size: 1rem;
+    margin-right: 10px;
+}
+.toFollow .follow {
+    background-color: #c51f5d;
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    padding: 5px 10px;
+    font-size: 0.8rem;
+    cursor: pointer;
+}
+/* Card des tweets */
+.liste_tweet {
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    width: 40%;
+
+}
+.liste_tweet .voir_plus {
+    background-color: #c51f5d;
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    padding: 5px 10px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+.tweet{
+  
+    background-color: #1b2836;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+.tweet .tweet_header{
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.tweet .tweet_header .tweet_author{
+    font-weight: 600;
+    font-size: 1rem;
+    margin-right: 10px;
+}
+.tweet .tweet_header .tweet_date{
+    font-size: 0.8rem;
+    color: #8899a6;
+}
+.tweet .profil_image{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 20px;
+}
+.tweet .tweet_content{
+    display: flex;
+    align-items: center;
+}
+.tweet .tweet_likes_retweets{
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+    gap: 5px;
+}
+
+/* coté droit */
+.right_side{
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+.right_side .connexion button{
+    display: flex;
+    align-items: center;
+    background-color: #c51f5d;
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    padding: 5px 10px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    margin-bottom: 20px;
+    text-align: center  ;   
+}
+.right_side .google button{
+    background-color: #fff;
+    color: #000;
+    border: none;
+    border-radius: 20px;
+    padding: 5px 10px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
