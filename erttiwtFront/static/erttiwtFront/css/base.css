@@ -5,6 +5,8 @@ html,body{
     color: #fff;
     font-family: 'Source Sans Pro', sans-serif;
     width: 100%;
+    padding: 0;
+    margin: 0;
 }
 a{
     color: #c51f5d;
@@ -115,7 +117,13 @@ a{
 .tweet .tweet_likes_retweets{
     display: flex;
     align-items: center;
+    justify-content: space-around;
     margin-top: 20px;
+    gap: 5px;
+}
+.tweet .tweet_likes_retweets div {
+    display: flex;
+    align-items: center;
     gap: 5px;
 }
 .tweet .commentaires {
@@ -137,8 +145,9 @@ a{
     display: flex;
     align-items: center;
     flex-direction: column;
+    width: 40%;
 }
-.right_side .connexion button{
+.right_side .connexion a{
     display: flex;
     align-items: center;
     background-color: #c51f5d;
@@ -161,3 +170,153 @@ a{
     cursor: pointer;
     margin-bottom: 20px;
 }
+
+/* form login */
+
+.formLogin{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
+}
+.formLogin input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 20px;
+    border: none;
+    background-color: #1b2836;
+    color: #fff;
+}
+.formLogin button {
+    width: 50%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 20px;
+    border: none;
+    background-color: #c51f5d;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+}
+.formLogin p {
+    color: #fff;
+    font-size: 0.8rem;
+    margin-bottom: 10px;
+}
+
+.contentLogin {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+.headernav{
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #1b2836;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+.headernav .search input{
+    width: 100%;
+    padding: 8px;
+    border-radius: 30px;
+    height: 15px;
+    border: none;
+    background-color: #8899a6;
+    color: #fff;
+   
+}
+.headernav .search {
+display: flex;
+align-items: center;
+   
+}
+.headernav .search button {
+    background-color: #c51f5d;
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    padding: 5px 10px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+/* vue profile home */
+
+.right_side .profil .profil_image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 20px;
+    position: relative;
+    top: 70px;
+    border: #fff solid 5px;
+    margin-left: 15px;
+}
+.profil {
+    border: #8899a6 solid 1px;
+    width: 100%;
+}
+.profil .follow_button {
+    background-color: #c51f5d;
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    padding: 5px 10px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    margin-left: 10px;
+    margin-top: 10px;
+    width: 100%;
+    display: flex;
+    flex-direction: row-reverse;
+    
+}
+.profil .profile_content {
+    padding: 20px;
+}
+
+.profil_header  {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    background-color: #fff;
+    width: 100%;
+
+}
+
+.profil .profil_name {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+.profil .profil_username {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+.profil .profil_bio {
+    font-size: 0.8rem;
+    margin-bottom: 10px;
+}
+.profil .profil_follow {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    gap: 5px;
+}
+.profil .profil_follow_number {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-right: 10px;
+}
+
+

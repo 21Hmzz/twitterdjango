@@ -1,0 +1,22 @@
+{% extends "erttiwtFront/base.html" %}
+{% load static %}
+{% block title%}Erttiwt{% endblock %}
+{% block content %}
+
+
+
+<div class="contentLogin">
+     <h2>Connectez vous !</h2>
+    <form action="{% url 'login' %}" method="post" class="formLogin">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Se connecter</button>
+    </form>
+    <a href="">Pas encore inscrit ?</a>
+
+ </div>
+
+
+
+
+ {% endblock %}
