@@ -12,57 +12,44 @@
 <div class="content">
   <div class="toFollow">
     <h3>Personnes à suivre</h3>
-    <li>
+    {% for user in users %}
+    <div class="toFollow_user">
       <img
         src="{% static 'erttiwtFront/img/defaut.jpg' %}"
         alt="image de profil"
         class="profil_image"
       />
-      <p class="tweet_author">@user</p>
+      <p class="tweet_author">@{{ user.username }}</p>
       <button class="follow">Suivre</button>
-    </li>
-    <li>
-      <img
-        src="{% static 'erttiwtFront/img/defaut.jpg' %}"
-        alt="image de profil"
-        class="profil_image"
-      />
-      <p class="tweet_author">@user</p>
-      <button class="follow">Suivre</button>
-    </li>
-    <li>
-      <img
-        src="{% static 'erttiwtFront/img/defaut.jpg' %}"
-        alt="image de profil"
-        class="profil_image"
-      />
-      <p class="tweet_author">@user</p>
-      <button class="follow">Suivre</button>
-    </li>
-    <li>
-      <img
-        src="{% static 'erttiwtFront/img/defaut.jpg' %}"
-        alt="image de profil"
-        class="profil_image"
-      />
-      <p class="tweet_author">@user</p>
-      <button class="follow">Suivre</button>
-    </li>
+    </div>
+    {% endfor %}
   </div>
 
   <div class="liste_tweet">
     <h3>Actualités</h3>
+    <div class="infinite-container">
     {% for Tweet in Tweets %}
-
+    <div class="infinite-item">
     <div class="tweet">
       <div class="tweet_header">
+        <div style="display:flex;gap:5px;align-items:center">
         <img
           src="{% static 'erttiwtFront/img/defaut.jpg' %}"
           alt="image de profil"
           class="profil_image"
         />
-        <p class="tweet_author">{{ Tweet.user }} <i class='bx bxs-user-check'></i> <small>@{{ Tweet.user }} ·</small></p>
+        <p class="tweet_author">{{ Tweet.user  }} <i class='bx bxs-user-check'></i> <small>@{{ Tweet.user }} ·</small></p>
         <p class="tweet_date">{{ Tweet.date }}</p>
+      </div>
+        {% if user.is_authenticated %}
+          {% if user|stringformat:'s' == Tweet.user|stringformat:'s' %}
+          <div>
+            <a href=""><i class='bx bx-edit-alt' ></i></a>
+            <a href="deletetweet/{{ Tweet.idTwitt }}"><i class='bx bx-trash'></i></a>
+          </div>
+          {% endif %}
+
+        {% endif %}
       </div>
       <div class="tweet_content">
         <p>{{ Tweet.twitt }}</p>
@@ -76,14 +63,32 @@
           <i class="bx bx-recycle bx-sm"></i>
           <p>{{ Tweet.retwitts }}</p>
         </div>
-        <div>
-          <i class="bx bx-heart bx-sm"></i>
-          <p>{{ Tweet.likes }}</p>
+        <div id="{{ Tweet.idTwitt }}" class="like">
+          <i class="bx bx-heart bx-sm" ></i>
+          <p >{{ Tweet.likes }}</p>
         </div>
       </div>
     </div>
+    </div>
     {% endfor %}
-    <button class="voir_plus">Voir plus</button>
+  </div>
+  {% if Tweets.has_next %}
+    <a class="infinite-more-link voir_plus" href="?page={{ Tweets.next_page_number }}">Voir plus</a>
+  {% endif %}
+  <div class="loading" style="display: none;">
+    Chargement...
+  </div>
+  <script>
+    var infinite = new Waypoint.Infinite({
+      element: $('.infinite-container')[0],
+      onBeforePageLoad: function () {
+        $('.loading').show();
+      },
+      onAfterPageLoad: function ($items) {
+        $('.loading').hide();
+      }
+    });
+  </script>
   </div>
 
   <div class="right_side">
@@ -97,21 +102,31 @@
         class="profil_image"
       />
       </div>
-      <div class="follow_button">
-        {% if user.is_authenticated %}
-        <a href="{% url 'logout' %}">Se déconnecter</a>
-        {% else %}
-        <button class="follow">Suivre</button>
-        {% endif %}
-      </div>
+     
    <div class="profile_content">
+   <div class="nameprofil">
+    <div>
       <p class="profil_name">{{ user.username }}</p>
       <p class="profil_username">@{{ user.username }}</p>
+    </div>
+     <div class="follow_button">
+      <a href="{% url 'logout' %}">Se déconnecter</a>
+    </div>
+   </div>
       <p class="profil_bio">Bio</p>
       <div class="profil_follow">
         <p><span class="profil_follow_number">0</span> Abonnements</p>
         <p><span class="profil_follow_number">0</span> Abonnés</p>
       </div>
+    </div>
+    <div class="NouveauTweet">
+      <form action="{%url 'newTwitt' %}" method="POST" >
+        {% csrf_token %}
+        {% for field in twittForm %}
+        {{ field }}
+        {% endfor %}
+        <button type="submit">Tweeter</button>
+      </form>
     </div>
     {% else %}
     <h3>Pour accèder à toutes nos fontionnalités, veuillez vous inscrire</h3>
@@ -124,5 +139,28 @@
   </div>
   {% endif %}
 </div>
+
+<script>
+  $(document).ready(function () {
+    console.log("ready!");
+    $(".like").click(function () {
+      var id = $(this).attr("id");
+      var like = $(this).children("p").text();
+      like = parseInt(like);
+      console.log(like);
+      $.ajax({
+        url: "like/" + id,
+        type: "GET",
+        success: function (data) {
+         
+        },
+      });
+      $(this).children("i").removeClass("bx-heart");
+          $(this).children("i").addClass("bxs-heart");
+          $(this).children("i").css("color", "red");
+          $(this).children("p").text(like + 1);
+    });
+    })
+</script>
 
 {% endblock %}

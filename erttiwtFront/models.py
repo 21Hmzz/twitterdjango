@@ -1,11 +1,12 @@
 from django.db import models
+from django import forms
 
 # Create your models here.
 
 class Twitt(models.Model):
     
     idTwitt = models.AutoField(primary_key=True)
-    twitt = models.CharField(max_length=280)
+    twitt = models.TextField(max_length=280,verbose_name="Quoi de neuf ?", help_text="280 caractères maximum")
     date = models.DateTimeField(auto_now_add=True)
     user = models.CharField(max_length=50)
     likes = models.IntegerField(default=0)

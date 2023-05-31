@@ -92,6 +92,7 @@ a{
 .tweet .tweet_header{
     display: flex;
     align-items: center;
+    justify-content: space-between;
     margin-bottom: 20px;
 }
 .tweet .tweet_header .tweet_author{
@@ -275,15 +276,24 @@ align-items: center;
     cursor: pointer;
     margin-left: 10px;
     margin-top: 10px;
-    width: 100%;
     display: flex;
     flex-direction: row-reverse;
     
 }
+.profil .follow_button a{
+    color: #fff;
+}
 .profil .profile_content {
     padding: 20px;
+    display: flex;
+    flex-direction: column;
 }
-
+.nameprofil{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
 .profil_header  {
     display: flex;
     align-items: center;
@@ -320,3 +330,43 @@ align-items: center;
 }
 
 
+.toFollow_user{
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    gap: 5px;
+    width: 100%;
+    background-color: #1b2836;
+    padding: 10px;
+    border-radius: 20px;
+    margin-top: 10px;
+}
+
+.NouveauTweet form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+.NouveauTweet form textarea {
+    width: 90%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 20px;
+    border: none;
+    background-color: #1b2836;
+    color: #fff;
+    resize: none;
+}
+.NouveauTweet form button {
+    width: 50%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 20px;
+    border: none;
+    background-color: #c51f5d;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+}
