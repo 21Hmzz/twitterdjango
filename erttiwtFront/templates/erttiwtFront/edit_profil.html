@@ -1,0 +1,103 @@
+{% extends 'erttiwtFront/base.html' %} {% load static %} {% block title%}
+{{user.username }} | Mon profil {% endblock %}
+{% block content %}
+
+<style>
+    .content {
+        display: flex;
+        gap: 10px;
+        flex-direction: row;
+    }
+
+    .edit_profil_page {
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: start;
+        flex-direction: column;
+        margin-right: 10px;
+    }
+
+    form {
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        padding: 10px;
+    }
+
+    form input[type="text"],
+    [type="password"],
+    [type="email"] {
+        width: 100%;
+        margin: 10px;
+        border: 1px solid black;
+        border-radius: 5px;
+        padding: 10px;
+    }
+
+    form input[type="file"] {
+        margin: 10px;
+    }
+
+    form input[type="submit"] {
+        width: 100%;
+        margin: 10px;
+        border: 1px solid black;
+        border-radius: 5px;
+        padding: 10px;
+        background-color: #1e90ff;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .profil_picture {
+        width: 100%;
+        padding: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+
+    }
+</style>
+<div class="content">
+
+    <div class="edit_profil_page">
+        <form action="{% url 'editProfilExecute' %}" method="post" class="formEdit" enctype="multipart/form-data">
+
+            {% for field in form %}
+            {% csrf_token %}
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field }}
+            {% for error in field.errors %}
+            <p class="alert alert-danger">{{ error }}</p>
+            {% endfor %}
+
+            {% endfor %}
+            <input type="file" name="userpicture" id="">
+            <input type="submit" value="Modifier">
+        </form>
+    </div>
+    <div class="profil_picture">
+        <h3>
+            Aperçu
+        </h3>
+        <img src="{% get_media_prefix %}{{ image }}" alt="" width="80" height="70">
+        <p>
+            Format 80x70
+        </p>
+        <img src="{% get_media_prefix %}{{ image }}" alt="" width="300" height="300">
+        <p>
+            Format 300x300
+        </p>
+        <img src="{% get_media_prefix %}{{ image }}" alt="" width="500" height="400">
+        <p>
+            Format 500x400
+        </p>
+    </div>
+</div>
+
+
+{% endblock %}

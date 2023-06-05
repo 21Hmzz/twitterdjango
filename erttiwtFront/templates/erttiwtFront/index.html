@@ -1,166 +1,270 @@
-{% extends 'erttiwtFront/base.html' %} 
-{% load static %} 
-{% block title%}Erttiwt{% endblock %}
- {% block content %}
-
-<div class="header_info">
- 
-</div>
-
-
-
+{% extends 'erttiwtFront/base.html' %} {% load static %} {% block title%}
+Erttiwt {% endblock %} {% block content %}
+<style>
+  .bxs-heart {
+    color: red;
+  }
+</style>
+<div class="header_info"></div>
 <div class="content">
   <div class="toFollow">
     <h3>Personnes à suivre</h3>
     {% for user in users %}
+    {% if user.follow == False %}
     <div class="toFollow_user">
-      <img
-        src="{% static 'erttiwtFront/img/defaut.jpg' %}"
-        alt="image de profil"
-        class="profil_image"
-      />
-      <p class="tweet_author">@{{ user.username }}</p>
-      <button class="follow">Suivre</button>
+      {% if user.picture %}
+      <img src="{% get_media_prefix %}{{ user.picture }}" alt="image de profil" class="profil_image" />
+      {% else %}
+      <img src="{% static 'erttiwtFront/img/defaut.jpg' %}" alt="image de profil" class="profil_image" />
+      {% endif %}
+      <a href="profil/{{user.username}}" class="tweet_author" style="color:white">@{{ user.username }}</a>
+      <a href="follow/{{user.id}}">
+        <button class="follow">Suivre</button>
+      </a>
     </div>
+    {% endif %}
     {% endfor %}
-  </div>
 
+  </div>
   <div class="liste_tweet">
     <h3>Actualités</h3>
     <div class="infinite-container">
-    {% for Tweet in Tweets %}
-    <div class="infinite-item">
-    <div class="tweet">
-      <div class="tweet_header">
-        <div style="display:flex;gap:5px;align-items:center">
-        <img
-          src="{% static 'erttiwtFront/img/defaut.jpg' %}"
-          alt="image de profil"
-          class="profil_image"
-        />
-        <p class="tweet_author">{{ Tweet.user  }} <i class='bx bxs-user-check'></i> <small>@{{ Tweet.user }} ·</small></p>
-        <p class="tweet_date">{{ Tweet.date }}</p>
-      </div>
-        {% if user.is_authenticated %}
-          {% if user|stringformat:'s' == Tweet.user|stringformat:'s' %}
-          <div>
-            <a href=""><i class='bx bx-edit-alt' ></i></a>
-            <a href="deletetweet/{{ Tweet.idTwitt }}"><i class='bx bx-trash'></i></a>
+      {% for Tweet in Tweets %}
+      <div class="infinite-item">
+        <div class="tweet">
+          <div class="tweet_header">
+            <div style="display: flex; gap: 5px; align-items: center">
+              {% if Tweet.picture %}
+              <img src="{% get_media_prefix %}{{ Tweet.picture }}" alt="image de profil" class="profil_image" />
+              {% else %}
+              <img src="{% static 'erttiwtFront/img/defaut.jpg' %}" alt="image de profil" class="profil_image" />
+              {% endif %}
+              <p class="tweet_author">
+                {{ Tweet.user }} <i class="bx bxs-user-check"></i>
+                <small>@{{ Tweet.user }} ·</small>
+              </p>
+              <p class="tweet_date">{{ Tweet.date|date:'d F Y' }} {{ Tweet.date|time:'H:i' }}</p>
+            </div>
+            {% if user.is_authenticated %}
+            {% if user|stringformat:'s' == Tweet.user|stringformat:'s' %}
+            <div>
+              <i class="bx bx-edit-alt edittweet"></i>
+              <a href="deletetweet/{{ Tweet.idTwitt }}"><i class="bx bx-trash"></i></a>
+            </div>
+            {% endif %}
           </div>
-          {% endif %}
+          <div class="tweet_content">
+            <p>{{ Tweet.twitt }}</p>
+          </div>
+          <div class="tweet_likes_retweets">
+            <div>
+              <i class="bx bx-comment bx-sm"></i>
+              <p>{{ Tweet.commentaires|length }}</p>
+            </div>
+            <div id="{{ Tweet.idTwitt }}" class="retweet">
+              {% if Tweet.retweetParUser == True %}
+              <i class="bx bx-recycle bx-sm" style="color: green;"></i>
+              {% else %}
+              <i class="bx bx-recycle bx-sm"></i>
+              {% endif %}
+              <p>{{ Tweet.retwitts }}</p>
+            </div>
+            <div id="{{ Tweet.idTwitt }}" class="like">
+              {% if Tweet.likeParUser == True %}
+              <i class="bx bxs-heart bx-sm"></i>
+              {% else %}
+              <i class="bx bx-heart bx-sm"></i>
+              {% endif %}
+              <p>{{ Tweet.likes }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endif %}
 
-        {% endif %}
-      </div>
-      <div class="tweet_content">
-        <p>{{ Tweet.twitt }}</p>
-      </div>
-      <div class="tweet_likes_retweets">
-        <div>
-          <i class="bx bx-comment bx-sm"></i>
-          <p>{{ Tweet.commentaires|length }}</p>
-        </div>
-        <div>
-          <i class="bx bx-recycle bx-sm"></i>
-          <p>{{ Tweet.retwitts }}</p>
-        </div>
-        <div id="{{ Tweet.idTwitt }}" class="like">
-          <i class="bx bx-heart bx-sm" ></i>
-          <p >{{ Tweet.likes }}</p>
-        </div>
-      </div>
+      {% endfor %}
+
     </div>
-    </div>
-    {% endfor %}
-  </div>
-  {% if Tweets.has_next %}
+    {% if Tweets.has_next %}
     <a class="infinite-more-link voir_plus" href="?page={{ Tweets.next_page_number }}">Voir plus</a>
-  {% endif %}
-  <div class="loading" style="display: none;">
-    Chargement...
+    {% endif %}
+    <div class="loading" style="display: none">Chargement...</div>
+    <script>
+      var infinite = new Waypoint.Infinite({
+        element: $(".infinite-container")[0],
+        onBeforePageLoad: function () {
+          $(".loading").show();
+        },
+        onAfterPageLoad: function ($items) {
+          $(".loading").hide();
+        },
+      });
+    </script>
   </div>
-  <script>
-    var infinite = new Waypoint.Infinite({
-      element: $('.infinite-container')[0],
-      onBeforePageLoad: function () {
-        $('.loading').show();
-      },
-      onAfterPageLoad: function ($items) {
-        $('.loading').hide();
-      }
-    });
-  </script>
-  </div>
-
   <div class="right_side">
     {% if user.is_authenticated %}
     <h3>Mon profil</h3>
     <div class="profil">
       <div class="profil_header">
-        <img
-        src="{% static 'erttiwtFront/img/defaut.jpg' %}"
-        alt="image de profil"
-        class="profil_image"
-      />
+        {% if current_picture.profilPicture %}
+        <img src="{% get_media_prefix %}{{ current_picture }}" alt="image de profil" class="profil_image" />
+        {% else %}
+        <img src="{% static 'erttiwtFront/img/defaut.jpg' %}" alt="image de profil" class="profil_image" />
+        {% endif %}
       </div>
-     
-   <div class="profile_content">
-   <div class="nameprofil">
-    <div>
-      <p class="profil_name">{{ user.username }}</p>
-      <p class="profil_username">@{{ user.username }}</p>
-    </div>
-     <div class="follow_button">
-      <a href="{% url 'logout' %}">Se déconnecter</a>
-    </div>
-   </div>
-      <p class="profil_bio">Bio</p>
-      <div class="profil_follow">
-        <p><span class="profil_follow_number">0</span> Abonnements</p>
-        <p><span class="profil_follow_number">0</span> Abonnés</p>
+      <div class="profile_content">
+        <div class="nameprofil">
+          <div>
+            <p class="profil_name">{{ user.username }}</p>
+            <p class="profil_username">@{{ user.username }}</p>
+          </div>
+          <div class="follow_button">
+            <a href="{% url 'logout' %}">Se déconnecter</a>
+          </div>
+        </div>
+        <p class="profil_bio">Bio</p>
+        <div class="profil_follow">
+          <p>
+            <a href="" style="color: white;">
+              <span class="profil_follow_number">
+                {{ user_follow|length }}
+              </span> Abonnements
+            </a>
+          </p>
+
+          <p>
+            <a href="" style="color: white;">
+              <span class="profil_follow_number">
+                {{ user_follower|length }}
+              </span> Abonnés
+            </a>
+          </p>
+        </div>
+      </div>
+      <div class="NouveauTweet">
+        <form action="{% url 'newTwitt' %}" method="POST">
+          {% csrf_token %} {% for field in twittForm %}{{ field }}{% endfor %}
+          <button type="submit">Tweeter</button>
+        </form>
+      </div>
+      {% else %}
+      <h3>Pour accèder à toutes nos fontionnalités, veuillez vous inscrire</h3>
+      <div class="connexion">
+        <a href="{% url 'register' %}">S'inscrire</a>
+      </div>
+      <div class="google">
+        <button><i class="bx bxl-google"></i> S'inscrire avec Google</button>
       </div>
     </div>
-    <div class="NouveauTweet">
-      <form action="{%url 'newTwitt' %}" method="POST" >
-        {% csrf_token %}
-        {% for field in twittForm %}
-        {{ field }}
-        {% endfor %}
-        <button type="submit">Tweeter</button>
-      </form>
-    </div>
-    {% else %}
-    <h3>Pour accèder à toutes nos fontionnalités, veuillez vous inscrire</h3>
-    <div class="connexion">
-      <a href="{% url 'login' %}">S'inscrire</a>
-    </div>
-    <div class="google">
-      <button><i class="bx bxl-google"></i> S'inscrire avec Google</button>
+    {% endif %}
+  </div>
+  <style>
+    .subscrire {
+      background-color: #fff;
+      border-radius: 15px;
+      padding: 20px;
+      margin-bottom: 20px;
+      position: absolute;
+      transform: translate(-50%, -50%);
+      left: 50%;
+      top: 50%;
+      display: none;
+    }
+
+    .subscrire h3 {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: #000;
+    }
+
+    .subscrire p {
+      font-size: 15px;
+      font-weight: 400;
+      margin-bottom: 10px;
+      color: #000;
+    }
+
+    .subscrire_button button {
+      background-color: #1da1f2;
+      color: #fff;
+      border: none;
+      border-radius: 50px;
+      padding: 10px 20px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .subscrire_button button i {
+      font-size: 20px;
+      margin-left: 10px;
+    }
+
+    .subscrire strong {
+      font-size: 20px;
+      font-weight: 600;
+      color: #1da1f2;
+    }
+  </style>
+  <div class="subscrire">
+    <h3>S'abonner à Erttiwt</h3>
+    <p>Recevez plus de ce que vous adorez</p>
+    <p>
+      Avec cette abonnement, vous pouvez edité vos tweets et plus encore pour seulement <strong> 1999.99€ par
+        mois</strong>
+    </p>
+    <div class="subscrire_button">
+      <button>
+        Abonnez-vous maintenant <i class="bx bx-right-arrow-alt"></i>
+      </button>
     </div>
   </div>
-  {% endif %}
-</div>
-
-<script>
-  $(document).ready(function () {
-    console.log("ready!");
-    $(".like").click(function () {
-      var id = $(this).attr("id");
-      var like = $(this).children("p").text();
-      like = parseInt(like);
-      console.log(like);
-      $.ajax({
-        url: "like/" + id,
-        type: "GET",
-        success: function (data) {
-         
-        },
+  <script>
+    $(document).ready(function () {
+      console.log("ready!");
+      $(".edittweet").on("click", function () {
+        $(".subscrire").show();
+        window.scrollTo(0, 0);
+        console.log("click");
       });
-      $(this).children("i").removeClass("bx-heart");
-          $(this).children("i").addClass("bxs-heart");
-          $(this).children("i").css("color", "red");
-          $(this).children("p").text(like + 1);
-    });
-    })
-</script>
 
-{% endblock %}
+      $(".subscrire_button button").on("click", function () {
+        $(".subscrire").hide();
+      });
+      $(".retweet").click(function () {
+        var id = $(this).attr("id");
+        var retweet = $(this).children("p").text();
+        retweet = parseInt(retweet);
+        console.log(retweet);
+        $.ajax({
+          url: "retweet/" + id,
+          type: "GET",
+          success: function (data) { },
+        });
+        $(this).children("i").css("color", "green");
+        $(this)
+          .children("p")
+          .text(retweet + 1);
+      });
+      $(".like").click(function () {
+        var id = $(this).attr("id");
+        var like = $(this).children("p").text();
+        like = parseInt(like);
+        console.log(like);
+        $.ajax({
+          url: "like/" + id,
+          type: "GET",
+          success: function (data) { },
+        });
+        $(this).children("i").removeClass("bx-heart");
+        $(this).children("i").addClass("bxs-heart");
+        $(this).children("i").css("color", "red");
+        $(this)
+          .children("p")
+          .text(like + 1);
+      });
+    });
+  </script>
+  {% endblock %}
+</div>

@@ -4,4 +4,6 @@ from erttiwtFront import views
 from django.conf.urls.static import static
 urlpatterns = [
     path('', views.index),
+    path('profil/<str:username>', views.profil),
+    
 ]

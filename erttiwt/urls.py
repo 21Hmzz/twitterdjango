@@ -19,8 +19,11 @@ from django.urls import path,include
 from erttiwtFront import views
 from erttiwtBack import views
 from django.conf.urls.static import static
+from django.conf import settings
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('erttiwtFront.urls')),
     path('', include('erttiwtBack.urls')),
 ]
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

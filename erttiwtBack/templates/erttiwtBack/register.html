@@ -1,0 +1,25 @@
+{% extends "erttiwtFront/base.html" %} {% load static %} {% block title%}
+Erttiwt {% endblock %} {% block content %}
+<div class="contentLogin">
+  <h2>Inscrivez vous !</h2>
+  <form action="{% url 'register' %}" method="post" class="formLogin">
+    {% csrf_token %} 
+    {% for field in form %}
+    <div class="form-register">
+      <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+      {{ field }}
+      {% if field.help_text %}
+      <small class="form-text text-muted">{{ field.help_text }}</small>
+      {% endif %}
+      {% for error in field.errors %}
+      <p class="help is-danger">{{ error }}</p>
+      {% endfor %}
+    </div>
+    {% endfor %}
+    <button type="submit">S'inscrire</button>
+  </form>
+  <a href="{% url  'login' %}">
+    <p>Vous avez déjà un compte ?</p>
+  </a>
+</div>
+{% endblock %}

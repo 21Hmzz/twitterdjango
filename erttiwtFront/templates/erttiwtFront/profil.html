@@ -1,0 +1,178 @@
+{% extends 'erttiwtFront/base.html' %} {% load static %} {% block title%}
+{{user.username }} | Mon profil {% endblock %}
+{% block content %}
+
+<style>
+    .profil_page {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        margin-bottom: 150px;
+    }
+
+    .profil_page_header {
+        width: 100%;
+        height: 200px;
+        background-color: #000;
+        display: flex;
+        padding: 10px;
+    }
+
+    .profil_page_header_img {
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        overflow: hidden;
+        margin-right: 50px;
+        position: relative;
+        top: 110px;
+        border: 5px solid #fff;
+    }
+
+    .edit_profil {
+        position: relative;
+        top: 250px;
+        left: 75%;
+        width: 150px;
+        height: 50px;
+        border-radius: 20px;
+        border: 1px solid #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .edit_profil a {
+        color: #fff;
+        text-decoration: none;
+    }
+
+    .edit_profil:hover {
+        background-color: #eaeaea;
+
+    }
+
+    .profil_page_header_img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .profil_page_body_text {
+        position: relative;
+        top: 110px;
+        margin-left: 30px;
+    }
+
+    .profil_header_text {
+        color: #fff;
+    }
+
+    .profil_page_content {
+        width: 100%;
+        display: flex;
+        padding: 10px;
+
+    }
+
+    .last_tweet {
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .tweet_header_profil {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 10px;
+    }
+</style>
+<div class="profil_page">
+    <div class="profil_page_header">
+        <div class="profil_page_header_img">
+            <img src="{% static 'erttiwtFront/img/defaut.jpg' %}" alt="logo" width="200px">
+        </div>
+        {% if user.is_authenticated %}
+        {% if userinfos == request.user %}
+        <div class="edit_profil">
+            <a href="/editProfil/{{user.id}}">Modifier le profil</a>
+        </div>
+        {% endif %}
+        {% endif %}
+    </div>
+    <div class="profil_page_body">
+        <div class="profil_page_body_text">
+            <h1 class="profil_header_text">{{userinfos.username}}</h1>
+            <p>
+                @{{userinfos.username}}
+            </p>
+        </div>
+    </div>
+</div>
+<div class="profil_page_content">
+    <div class="last_tweet">
+        {% if user.is_authenticated %}
+        {% if userinfos == request.user %}
+        <h1>Vos derniers tweets</h1>
+        {% else %}
+
+        <h1>Les derniers tweets de {{userinfos.username}}</h1>
+
+        {% endif %}
+        {% endif %}
+        <div class="infinite-container">
+            {% for tweet in Tweets %}
+            <div class="infinite-item">
+                <div class="tweet">
+                    <div class="tweet_header">
+                        <div class="tweet_header_profil">
+                            <img src="{% static 'erttiwtFront/img/defaut.jpg' %}" alt="logo" width="50px">
+                            <h1>{{tweet.user}}</h1>
+                            <p>@{{tweet.user}}</p>
+                        </div>
+
+                    </div>
+                    <div class="tweet_body">
+                        <p>{{tweet.twitt}}</p>
+                    </div>
+                    <div class="tweet_footer">
+                        <p>{{tweet.date|date:"d F Y" }} {{ tweet.date|time:"H:i" }}</p>
+                        <div class="tweet_likes_retweets">
+                            <div>
+                                <i class="bx bx-comment bx-sm"></i>
+                                <p>{{ tweet.commentaires|length }}</p>
+                            </div>
+                            <div>
+                                <i class="bx bx-recycle bx-sm"></i>
+                                <p>{{ tweet.retwitts }}</p>
+                            </div>
+                            <div id="{{ tweet.idTwitt }}" class="like">
+                                <i class="bx bx-heart bx-sm"></i>
+                                <p>{{ tweet.likes }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% if Tweets.has_next %}
+            <a class="infinite-more-link voir_plus" href="?page={{ Tweets.next_page_number }}">Voir plus</a>
+            {% endif %}
+            <div class="loading" style="display: none">Chargement...</div>
+            <script>
+                var infinite = new Waypoint.Infinite({
+                    element: $(".infinite-container")[0],
+                    onBeforePageLoad: function () {
+                        $(".loading").show();
+                    },
+                    onAfterPageLoad: function ($items) {
+                        $(".loading").hide();
+                    },
+                });
+            </script>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

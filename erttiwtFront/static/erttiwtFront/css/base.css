@@ -7,7 +7,13 @@ html,body{
     width: 100%;
     padding: 0;
     margin: 0;
+    box-sizing: border-box;
 }
+svg
+ {
+    fill: #1DA1F2;
+  }
+  
 a{
     color: #c51f5d;
     text-decoration: none;
@@ -369,4 +375,38 @@ align-items: center;
     color: #fff;
     font-weight: 600;
     cursor: pointer;
+}
+
+/* formulaire inscription */
+
+.form-register{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
+}
+
+.form-text{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.text-muted{
+    color: #fff;
+    font-size: 0.8rem;
+    margin-bottom: 10px;
+}
+.help{
+    color: #fff;
+    font-size: 0.8rem;
+    margin-bottom: 10px;
+}
+.is-danger{
+    color: #fff;
+    font-size: 0.8rem;
+    margin-bottom: 10px;
 }
