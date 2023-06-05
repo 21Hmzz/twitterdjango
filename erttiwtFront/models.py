@@ -36,8 +36,12 @@ class TweetLike(models.Model):
     tweet = models.ForeignKey(Twitt, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return self.user + " like " + self.tweet
+
     class Meta:
         unique_together = ('user', 'tweet')
+     
 
 class TweetRetweet(models.Model):
     user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
@@ -46,3 +50,6 @@ class TweetRetweet(models.Model):
 
     class Meta:
         unique_together = ('user', 'tweet')
+    
+    def __str__(self):
+        return self.user + " retweet " + self.tweet

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from erttiwtBack import views
 from erttiwtFront import views as viewsFront
 from django.contrib.auth import views as auth_views
@@ -15,4 +15,5 @@ urlpatterns = [
    path('follow/<int:idUser>', views.follow, name='follow'),
    path('editProfil/<str:username>', views.editProfil, name='editProfil'),
    path('saveProfil/', views.editProfilExecute, name='editProfilExecute'),
+   path('search/', views.ajaxSearch, name='ajaxSearch'),
 ]

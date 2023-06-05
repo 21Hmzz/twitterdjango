@@ -4,7 +4,11 @@ from erttiwtFront.models import Twitt,Commentaire,Abonnements,TweetLike,TweetRet
 from erttiwtBack.models import userProfilPictures
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator
-from erttiwtBack.forms import TwittForm,UserRegisterForm,EditProfilForm
+from erttiwtBack.forms import TwittForm,UserRegisterForm,EditProfilForm 
+from django.http import HttpResponse
+from django.core import serializers
+import json
+
 
 # Create your views here.
 
@@ -28,23 +32,41 @@ def deletetweet(request,idTwitt):
 
 def like(request,idTwitt):
     twitt = Twitt.objects.get(idTwitt=idTwitt)
-    twitt.likes += 1
-    twitt.save()
-    like = TweetLike()
-    like.user = request.user
-    like.tweet = twitt
-    like.save()
-    return redirect('/')
+
+    if TweetLike.objects.filter(user=request.user,tweet=twitt).exists():
+        like = TweetLike.objects.get(user=request.user,tweet=idTwitt)
+        like.delete()
+        twitt = Twitt.objects.get(idTwitt=idTwitt)
+        twitt.likes -= 1
+        twitt.save()
+        return redirect('/')
+    else:
+        like = TweetLike()
+        like.user = request.user
+        like.tweet = twitt
+        like.save()
+        twitt = Twitt.objects.get(idTwitt=idTwitt)
+        twitt.likes += 1
+        twitt.save()
+        return redirect('/')
 
 def retweet(request,idTwitt):
     twitt = Twitt.objects.get(idTwitt=idTwitt)
-    twitt.retwitts += 1
-    twitt.save()
-    retweet = TweetRetweet()
-    retweet.user = request.user
-    retweet.tweet = twitt
-    retweet.save()
-    return redirect('/')
+    if TweetRetweet.objects.filter(user=request.user,tweet=twitt).exists():
+        retweet = TweetRetweet.objects.get(user=request.user,tweet=twitt)
+        retweet.delete()
+        twitt = Twitt.objects.get(idTwitt=idTwitt)
+        twitt.retwitts -= 1
+        twitt.save()
+        return redirect('/')
+    else:
+        twitt.retwitts += 1
+        twitt.save()
+        retweet = TweetRetweet()
+        retweet.user = request.user
+        retweet.tweet = twitt
+        retweet.save()
+        return redirect('/')
 
 def register(request):
     if request.method == "POST":
@@ -102,3 +124,27 @@ def editProfilExecute(request):
     else:
         form = EditProfilForm(instance=request.user)
     return render(request,'erttiwtFront/edit_profil.html',{'form':form})
+
+
+def ajaxSearch(request):
+    if request.is_ajax():
+        q = request.GET.get('term', '')
+        users = User.objects.filter(username__icontains=str(q))
+        results = []
+        for user in users:
+            user_json = {}
+            user_json['id'] = user.id
+            user_json['label'] = user.username
+            user_json['value'] = user.username
+            if userProfilPictures.objects.filter(user=user.id).exists():
+                image = userProfilPictures.objects.get(user=user.id)
+                user_json['image'] = str(image.profilPicture)
+            results.append(user_json)
+        data = json.dumps(results)
+
+    else:
+        data = 'fail'
+    mimetype = 'application/json'
+    return HttpResponse(data, mimetype)
+
+    

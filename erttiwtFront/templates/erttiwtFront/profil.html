@@ -2,96 +2,14 @@
 {{user.username }} | Mon profil {% endblock %}
 {% block content %}
 
-<style>
-    .profil_page {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        margin-bottom: 150px;
-    }
-
-    .profil_page_header {
-        width: 100%;
-        height: 200px;
-        background-color: #000;
-        display: flex;
-        padding: 10px;
-    }
-
-    .profil_page_header_img {
-        width: 200px;
-        height: 200px;
-        border-radius: 50%;
-        overflow: hidden;
-        margin-right: 50px;
-        position: relative;
-        top: 110px;
-        border: 5px solid #fff;
-    }
-
-    .edit_profil {
-        position: relative;
-        top: 250px;
-        left: 75%;
-        width: 150px;
-        height: 50px;
-        border-radius: 20px;
-        border: 1px solid #fff;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .edit_profil a {
-        color: #fff;
-        text-decoration: none;
-    }
-
-    .edit_profil:hover {
-        background-color: #eaeaea;
-
-    }
-
-    .profil_page_header_img img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-
-    .profil_page_body_text {
-        position: relative;
-        top: 110px;
-        margin-left: 30px;
-    }
-
-    .profil_header_text {
-        color: #fff;
-    }
-
-    .profil_page_content {
-        width: 100%;
-        display: flex;
-        padding: 10px;
-
-    }
-
-    .last_tweet {
-        width: 50%;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .tweet_header_profil {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        gap: 10px;
-    }
-</style>
 <div class="profil_page">
     <div class="profil_page_header">
         <div class="profil_page_header_img">
+            {% if userinfos.picture %}
+            <img src="{% get_media_prefix %}{{userinfos.picture}}" alt="logo" width="200px">
+            {% else %}
             <img src="{% static 'erttiwtFront/img/defaut.jpg' %}" alt="logo" width="200px">
+            {% endif %}
         </div>
         {% if user.is_authenticated %}
         {% if userinfos == request.user %}
@@ -107,6 +25,23 @@
             <p>
                 @{{userinfos.username}}
             </p>
+            <div class="follow_info_profil_page">
+                <p>
+                    {{ user_follow|length }}
+                    {% if user_follow|length > 1 %}
+                    abonnements
+                    {% else %}
+                    abonnement
+                    {% endif %}
+                </p>
+                <p>
+                    {{ user_follower|length }}
+                    {% if user_followed|length > 1 %}
+                    abonnés
+                    {% else %}
+                    abonné
+                    {% endif %}
+            </div>
         </div>
     </div>
 </div>
@@ -121,13 +56,23 @@
 
         {% endif %}
         {% endif %}
+        {% if Tweets|length == 0 %}
+        <p class="no_tweet">Aucun tweet</p>
+        {% endif %}
         <div class="infinite-container">
             {% for tweet in Tweets %}
+
             <div class="infinite-item">
                 <div class="tweet">
                     <div class="tweet_header">
                         <div class="tweet_header_profil">
-                            <img src="{% static 'erttiwtFront/img/defaut.jpg' %}" alt="logo" width="50px">
+                            {% if tweet.picture %}
+                            <img src="{% get_media_prefix %}{{ tweet.picture }}" alt="image de profil"
+                                class="profil_image" />
+                            {% else %}
+                            <img src="{% static 'erttiwtFront/img/defaut.jpg' %}" alt="image de profil"
+                                class="profil_image" />
+                            {% endif %}
                             <h1>{{tweet.user}}</h1>
                             <p>@{{tweet.user}}</p>
                         </div>
@@ -143,12 +88,20 @@
                                 <i class="bx bx-comment bx-sm"></i>
                                 <p>{{ tweet.commentaires|length }}</p>
                             </div>
-                            <div>
+                            <div id="{{ tweet.idTwitt }}" class="retweet">
+                                {% if tweet.retweetParUser == True %}
+                                <i class="bx bx-recycle bx-sm" style="color: green;"></i>
+                                {% else %}
                                 <i class="bx bx-recycle bx-sm"></i>
+                                {% endif %}
                                 <p>{{ tweet.retwitts }}</p>
                             </div>
                             <div id="{{ tweet.idTwitt }}" class="like">
+                                {% if tweet.likeParUser == True %}
+                                <i class="bx bxs-heart bx-sm"></i>
+                                {% else %}
                                 <i class="bx bx-heart bx-sm"></i>
+                                {% endif %}
                                 <p>{{ tweet.likes }}</p>
                             </div>
                         </div>
@@ -157,6 +110,167 @@
             </div>
             {% endfor %}
             {% if Tweets.has_next %}
+            <a class="infinite-more-link voir_plus" href="?page={{ Tweets.next_page_number }}">Voir plus</a>
+            {% endif %}
+            <div class="loading" style="display: none">Chargement...</div>
+            <script>
+                var infinite = new Waypoint.Infinite({
+                    element: $(".infinite-container")[0],
+                    onBeforePageLoad: function () {
+                        $(".loading").show();
+                    },
+                    onAfterPageLoad: function ($items) {
+                        $(".loading").hide();
+                    },
+                });
+            </script>
+        </div>
+    </div>
+
+    <div class="last_likes">
+        {% if user.is_authenticated %}
+        {% if userinfos == request.user %}
+        <h1>Vos derniers likes</h1>
+        {% else %}
+
+        <h1>Les derniers likes de {{userinfos.username}}</h1>
+
+        {% endif %}
+        {% endif %}
+        {% if TweetLike_list|length == 0 %}
+        <p class="no_tweet">Aucun like</p>
+        {% endif %}
+
+        <div class="infinite-container">
+            {% for likes in TweetLike_list %}
+            <div class="infinite-item">
+                <div class="tweet">
+                    <div class="tweet_header">
+                        <div class="tweet_header_profil">
+                            {% if likes.tweet.picture %}
+                            <img src="{% get_media_prefix %}{{ likes.tweet.picture }}" alt="image de profil"
+                                class="profil_image" />
+                            {% else %}
+                            <img src="{% static 'erttiwtFront/img/defaut.jpg' %}" alt="image de profil"
+                                class="profil_image" />
+                            {% endif %}
+                            <h1>{{likes.tweet.user}}</h1>
+                            <p>@{{likes.tweet.user}}</p>
+                        </div>
+
+                    </div>
+                    <div class="tweet_body">
+                        <p>{{likes.tweet.twitt}}</p>
+                    </div>
+                    <div class="tweet_footer">
+                        <p>{{likes.tweet.date|date:"d F Y" }} {{ likes.tweet.date|time:"H:i" }}</p>
+                        <div class="tweet_likes_retweets">
+                            <div>
+                                <i class="bx bx-comment bx-sm"></i>
+                                <p>{{ likes.tweet.commentaires|length }}</p>
+                            </div>
+                            <div id="{{ likes.tweet.idTwitt }}" class="retweet">
+                                {% if likes.tweet.retweetParUser == True %}
+                                <i class="bx bx-recycle bx-sm" style="color: green;"></i>
+                                {% else %}
+                                <i class="bx bx-recycle bx-sm"></i>
+                                {% endif %}
+                                <p>{{ likes.tweet.retwitts }}</p>
+                            </div>
+                            <div id="{{ likes.tweet.idTwitt }}" class="like">
+                                {% if likes.tweet.likeParUser == True %}
+                                <i class="bx bxs-heart bx-sm"></i>
+                                {% else %}
+                                <i class="bx bx-heart bx-sm"></i>
+                                {% endif %}
+                                <p>{{ likes.tweet.likes }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% if TweetLike_list.has_next %}
+            <a class="infinite-more-link voir_plus" href="?page={{ Tweets.next_page_number }}">Voir plus</a>
+            {% endif %}
+            <div class="loading" style="display: none">Chargement...</div>
+            <script>
+                var infinite = new Waypoint.Infinite({
+                    element: $(".infinite-container")[0],
+                    onBeforePageLoad: function () {
+                        $(".loading").show();
+                    },
+                    onAfterPageLoad: function ($items) {
+                        $(".loading").hide();
+                    },
+                });
+            </script>
+        </div>
+    </div>
+    <div class="last_retweets">
+        {% if user.is_authenticated %}
+        {% if userinfos == request.user %}
+        <h1>Vos derniers retweets</h1>
+        {% else %}
+
+        <h1>Les derniers retweets de {{userinfos.username}}</h1>
+
+        {% endif %}
+        {% endif %}
+        {% if TweetRetweet_list|length == 0 %}
+        <p class="no_tweet">Aucun retweet</p>
+        {% endif %}
+        <div class="infinite-container">
+            {% for retweets in TweetRetweet_list %}
+            <div class="infinite-item">
+                <div class="tweet">
+                    <div class="tweet_header">
+                        <div class="tweet_header_profil">
+                            {% if retweets.tweet.picture %}
+                            <img src="{% get_media_prefix %}{{ retweets.tweet.picture }}" alt="image de profil"
+                                class="profil_image" />
+                            {% else %}
+                            <img src="{% static 'erttiwtFront/img/defaut.jpg' %}" alt="image de profil"
+                                class="profil_image" />
+                            {% endif %}
+                            <h1>{{retweets.tweet.user}}</h1>
+                            <p>@{{retweets.tweet.user}}</p>
+                        </div>
+
+                    </div>
+                    <div class="tweet_body">
+                        <p>{{retweets.tweet.twitt}}</p>
+                    </div>
+                    <div class="tweet_footer">
+                        <p>{{retweets.tweet.date|date:"d F Y" }} {{ retweets.tweet.date|time:"H:i" }}</p>
+                        <div class="tweet_likes_retweets">
+                            <div>
+                                <i class="bx bx-comment bx-sm"></i>
+                                <p>{{ retweets.tweet.commentaires|length }}</p>
+                            </div>
+
+                            <div id="{{ retweets.tweet.idTwitt }}" class="retweet">
+                                {% if retweets.tweet.retweetParUser == True %}
+                                <i class="bx bx-recycle bx-sm" style="color: green;"></i>
+                                {% else %}
+                                <i class="bx bx-recycle bx-sm"></i>
+                                {% endif %}
+                                <p>{{ retweets.tweet.retwitts }}</p>
+                            </div>
+                            <div id="{{ retweets.tweet.idTwitt }}" class="like">
+                                {% if retweets.tweet.likeParUser == True %}
+                                <i class="bx bxs-heart bx-sm"></i>
+                                {% else %}
+                                <i class="bx bx-heart bx-sm"></i>
+                                {% endif %}
+                                <p>{{ retweets.tweet.likes }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% if TweetLike_list.has_next %}
             <a class="infinite-more-link voir_plus" href="?page={{ Tweets.next_page_number }}">Voir plus</a>
             {% endif %}
             <div class="loading" style="display: none">Chargement...</div>

@@ -8,7 +8,11 @@ html,body{
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    overflow-x: hidden;
 }
+.bxs-heart {
+    color: red;
+  }
 svg
  {
     fill: #1DA1F2;
@@ -410,3 +414,171 @@ align-items: center;
     font-size: 0.8rem;
     margin-bottom: 10px;
 }
+
+/* profil page */
+
+.profil_page {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 150px;
+}
+
+.profil_page_header {
+    height: 200px;
+    background-color: #000;
+    display: flex;
+    padding: 10px;
+}
+
+.profil_page_header_img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 50px;
+    position: relative;
+    top: 110px;
+    border: 5px solid #fff;
+}
+
+.edit_profil {
+    position: relative;
+    top: 250px;
+    left: 75%;
+    width: 150px;
+    height: 50px;
+    border-radius: 20px;
+    border: 1px solid #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.edit_profil a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.edit_profil:hover {
+    background-color: #eaeaea;
+
+}
+
+.profil_page_header_img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.profil_page_body_text {
+    position: relative;
+    top: 110px;
+    margin-left: 30px;
+}
+
+.profil_header_text {
+    color: #fff;
+}
+
+.profil_page_content {
+    width: 100%;
+    display: flex;
+    padding: 10px;
+
+}
+
+.last_tweet {
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+}
+.last_tweet h1 {
+    text-align: center;
+    border-bottom: 5px solid #2E7FC3;
+    padding-bottom: 10px;
+    border-radius: 5px;
+
+}
+
+.tweet_header_profil {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+.last_likes{
+    margin-left: 10px;
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+}
+.last_likes h1 {
+    text-align: center;
+    border-bottom: 5px solid #2E7FC3;
+    padding-bottom: 10px;
+    border-radius: 5px;
+}
+.last_retweets {
+    margin-left: 10px;
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+}
+.last_retweets h1 {
+    text-align: center;
+    border-bottom: 5px solid #2E7FC3;
+    padding-bottom: 10px;
+    border-radius: 5px;
+}
+
+.follow_info_profil_page{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+/* search result ajax */
+.ui-autocomplete{
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    text-decoration: none;
+    z-index: 9999;
+    position: absolute;
+    background-color: #1b2836;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0 20px 20px 20px;
+    width: 30%;
+}
+.searchresult{
+   width: 100%;
+   border-radius:  20px;
+}
+.searchresult:hover{
+    background-color: #2E7FC3;
+    cursor: pointer;
+}
+.searchresultdiv{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 10px;
+    
+}
+.searchresultdiv .nameresult{
+    display: flex;
+    flex-direction: column;
+}
+.nameresult span {
+    color: #fff;
+    font-size: 1.3rem;
+}
+.nameresult small{
+    color: #fff;
+    font-size: 0.8rem;
+}
+
