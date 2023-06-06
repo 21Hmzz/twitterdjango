@@ -8,7 +8,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    {% if color_theme == 'light' %}
+    <link rel="stylesheet" href="{% static 'erttiwtFront/css/light.css' %}">
+    {% else %}
+    <link rel="stylesheet" href="{% static 'erttiwtFront/css/dark.css' %}">
+    {% endif %}
     <link rel="stylesheet" href="{% static 'erttiwtFront/css/base.css' %}">
+
     <link rel="shortcut icon" type="image/png" href="{% static 'erttiwtFront/img/logo_2.svg' %}" />
     <script src="{% static 'erttiwtFront/js/jquery.js' %}"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"
@@ -29,35 +35,82 @@
 
 <body>
     <nav class="headernav">
-        <div class="logo">
-            <a href="/"><svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
-                    xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="50px" height="50px"
-                    viewBox="0 0 496.013 496.013" style="enable-background:new 0 0 496.013 496.013;"
-                    xml:space="preserve">
-                    <g>
+        <div>
+
+
+            <div class="logo">
+                <a href="/"><svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="20px" height="20px"
+                        viewBox="0 0 496.013 496.013" style="enable-background:new 0 0 496.013 496.013;"
+                        xml:space="preserve">
                         <g>
-                            <polygon
-                                points="271.942,209.614 338.425,114.466 257.523,39.026 144.542,79.657 148.303,186.135 		" />
-                            <polygon
-                                points="228.868,402.407 289.71,465.777 395.984,420.409 413.34,326.511 307.844,313.522 		" />
-                            <path
-                                d="M15.731,336.798l1.343,1.644c36.151,92.23,125.889,157.571,230.934,157.571c136.976,0,248.006-111.029,248.006-248.007
+                            <g>
+                                <polygon
+                                    points="271.942,209.614 338.425,114.466 257.523,39.026 144.542,79.657 148.303,186.135 		" />
+                                <polygon
+                                    points="228.868,402.407 289.71,465.777 395.984,420.409 413.34,326.511 307.844,313.522 		" />
+                                <path
+                                    d="M15.731,336.798l1.343,1.644c36.151,92.23,125.889,157.571,230.934,157.571c136.976,0,248.006-111.029,248.006-248.007
                        C496.013,111.036,384.983,0,248.007,0C111.036,0,0,111.043,0,248.006c0,30.668,5.604,60.026,15.785,87.145L15.731,336.798z
                         M12.93,248.006c0-31.32,6.209-61.204,17.38-88.564l58.667-72.789l15.206-24.383c39.792-30.883,89.68-49.339,143.833-49.339
                        c1.302,0,2.583,0.08,3.893,0.094l26.236,9.664l57.827,7.379c37.029,15.002,69.417,39.15,94.312,69.671l-9.63,41.932
                        l37.994,107.148l24.272,6.148c-3.727,126.418-107.619,228.106-234.905,228.106c-63.375,0-120.926-25.247-163.249-66.159
                        l45.626-39.192L86.849,265.485l-68.128-23.465l-1.575,50.047C14.42,277.797,12.93,263.077,12.93,248.006z" />
+                            </g>
                         </g>
-                    </g>
-                </svg></a>
+                    </svg></a>
+            </div>
+            <div class="search">
+                <input type="text" placeholder="Rechercher" id="searchBar">
+                <button><i class='bx bx-search-alt bx-sm'></i></button>
+            </div>
+            <div class="menu">
+                {% if user.is_authenticated %}
+                <a href="/"><i class='bx bx-home bx-md'></i> Accueil </a>
+                <a href="/"><i class='bx bx-message-square-detail bx-md'></i>
+                    Messages</a>
+                <a href="/"><i class='bx bx-bell bx-md'></i>
+                    Notifications</a>
+                <a href="/profil/{{current_username.username}}"><i class='bx bx-user bx-md'></i>
+                    Profil</a>
+
+                <a href="{% url 'logout' %}"><i class='bx bx-log-out bx-md'></i>
+                    Déconnexion</a>
+                {% else %}
+                <a href="{% url 'login' %}"><i class='bx bx-log-in bx-md'></i> Connexion</a>
+                <a href="{% url 'register' %}"><i class='bx bx-user-plus bx-md'></i> Inscription</a>
+                {% endif %}
+            </div>
         </div>
 
-        <div class="search">
-            <input type="text" placeholder="Rechercher" id="searchBar">
-            <button><i class='bx bx-search-alt bx-sm'></i></button>
+        {% if user.is_authenticated %}
+        <div class="mini_profil">
+
+            {% if current_picturebase.profilPicture %}
+            <img src="{% get_media_prefix %}{{ current_picturebase.profilPicture }}" alt="image de profil"
+                class="profil_image" width="35" />
+            {% else %}
+            <img src="{% static 'erttiwtFront/img/defaut.jpg' %}" alt="image de profil" class="profil_image" />
+            {% endif %}
+            <a href="/profil/{{current_username}}" class="userinfo_base">
+                {% if current_username.is_staff %}
+                <i class='bx bxs-badge-check bx-sm'></i>
+                {% endif %}
+                <div>
+                    {{current_username.first_name}}
+                    <br>
+                    <small>@{{current_username.username}}</small>
+                </div>
+
+            </a>
+            <p>
+
+            </p>
+
         </div>
-        <div>
-            <a href="/"><i class='bx bx-home bx-md'></i></a>
+        {% endif %}
+
+        <!-- <div>
             {% if user.is_authenticated %}
             <a href="profil/{{user.username}}"><i class='bx bx-user bx-md'></i></a>
 
@@ -65,7 +118,7 @@
             {% else %}
             <a href="{% url 'login' %}"><i class='bx bx-log-in bx-md'></i></a>
             {% endif %}
-        </div>
+        </div> -->
 
     </nav>
     <main>

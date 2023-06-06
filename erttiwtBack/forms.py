@@ -29,3 +29,11 @@ class EditProfilForm(ModelForm):
             'last_name': 'Nom',
             'email': 'Email',
         }
+
+class CommentsForm(ModelForm):
+    class Meta:
+        model = Commentaire
+        fields = ['commentaire']
+        widgets = {
+            'commentaire': Textarea(attrs={'placeholder':'Commentaire'}),
+        }

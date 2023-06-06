@@ -6,3 +6,9 @@ class userProfilPictures(models.Model):
     profilPicture = models.ImageField(blank=True, null=True)
     def __str__(self):
         return "Photo de profil avec l'id : " + self.user.__str__()
+
+class userCoverPictures(models.Model):
+    user = models.IntegerField(primary_key=True)
+    coverPicture = models.ImageField(blank=True, null=True)
+    def __str__(self):
+        return "Photo de couverture avec l'id : " + self.user.__str__()

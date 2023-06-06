@@ -1,4 +1,8 @@
 $(document).ready(function () {
+  $(".subscrire").hide();
+  $(".listefollow").hide();
+  $(".listeFollower").hide();
+  $('.popup_new_comment').hide();
   $("#searchBar").autocomplete({
     source: function (request, response) {
       $.ajax({
@@ -34,6 +38,35 @@ $(document).ready(function () {
       .appendTo( ul );
   };
 
+$("#showFollow").on("click", function () {
+  $(".listefollow").show();
+  $(".listeFollower").hide();
+
+
+});
+
+$("#showFollower").on("click", function () {
+  $(".listeFollower").show();
+  $(".listefollow").hide();
+
+});
+
+$(".comments").on("click", function () {
+  
+  var id = $(this).attr("id");
+
+  var popup = $('#pop'+id);
+  console.log(popup.attr("id"));
+
+  if (popup.attr("id") == ('pop'+id)){
+    popup = $('#pop'+id);
+    if (popup.is(":visible")){
+      popup.hide();
+    }else{
+    popup.show();
+    }
+  }
+});
 
 
 
@@ -96,4 +129,25 @@ $(document).ready(function () {
       }
     });
   
+
+    $('#setLightMode').click(function(){
+      $.ajax({
+        url: "/setLightMode",
+        type: "GET",
+        success: function (data) { 
+          window.location.reload();
+        },
+      });
+    }
+    );
+    $('#setDarkMode').click(function(){
+      $.ajax({
+        url: "/setDarkMode",
+        type: "GET",
+        success: function (data) { 
+          window.location.reload();
+        },
+      });
+    }
+    );
   });

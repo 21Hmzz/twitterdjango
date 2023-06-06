@@ -1,13 +1,16 @@
 from django.shortcuts import render,redirect
 
 from erttiwtFront.models import Twitt,Commentaire,Abonnements,TweetLike,TweetRetweet
-from erttiwtBack.models import userProfilPictures
+from erttiwtBack.models import userProfilPictures,userCoverPictures
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator
-from erttiwtBack.forms import TwittForm,UserRegisterForm,EditProfilForm 
+from erttiwtBack.forms import TwittForm,UserRegisterForm,EditProfilForm,CommentsForm 
 from django.http import HttpResponse
+from django.http import HttpResponseRedirect
+
 from django.core import serializers
 import json
+
 
 
 # Create your views here.
@@ -82,12 +85,21 @@ def register(request):
     return render(request,'erttiwtBack/register.html',{'form':form})
 
 def follow(request,idUser):
-    user = User.objects.get(id=idUser)
-    abonnement = Abonnements()
-    abonnement.user = request.user.id
-    abonnement.abonnement = user.id
-    abonnement.save()
-    return redirect('/')
+    if request.user.is_authenticated:
+        user = User.objects.get(id=idUser)
+        if Abonnements.objects.filter(user=request.user.id,abonnement=user.id).exists():
+            abonnement = Abonnements.objects.get(user=request.user.id,abonnement=user.id)
+            abonnement.delete()
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+        else:
+            abonnement = Abonnements()
+            abonnement.user = request.user.id
+            abonnement.abonnement = user.id
+            abonnement.save()
+        
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    else:
+        return redirect('/login')
 
 
 
@@ -108,7 +120,7 @@ def editProfilExecute(request):
     if request.method == "POST":
         form = EditProfilForm(request.POST,request.FILES,instance=request.user)
         if form.is_valid():
-            if request.FILES:
+            if request.FILES.get('userpicture',False) :
                 if userProfilPictures.objects.filter(user=request.user.id).exists():
                     profilPicture = userProfilPictures.objects.get(user=request.user.id)
                     profilPicture.profilPicture = request.FILES['userpicture']
@@ -118,6 +130,16 @@ def editProfilExecute(request):
                     profilPicture.user = request.user.id
                     profilPicture.profilPicture = request.FILES['userpicture']
                     profilPicture.save()
+            if request.FILES.get('userCouverture',False):
+                if userCoverPictures.objects.filter(user=request.user.id).exists():
+                    coverPicture = userCoverPictures.objects.get(user=request.user.id)
+                    coverPicture.coverPicture = request.FILES['userCouverture']
+                    coverPicture.save()
+                else:
+                    coverPicture = userCoverPictures()
+                    coverPicture.user = request.user.id
+                    coverPicture.coverPicture = request.FILES['userCouverture']
+                    coverPicture.save()
             form.save()
             return redirect('/')
         
@@ -147,4 +169,32 @@ def ajaxSearch(request):
     mimetype = 'application/json'
     return HttpResponse(data, mimetype)
 
-    
+def setLightMode(request):
+    response = redirect('/')
+    response.set_cookie('mode','light')
+    return response
+
+def setDarkMode(request):
+    response = redirect('/')
+    response.set_cookie('mode','dark')
+    return response
+
+
+def comment(request,idTwitt):
+    if request.method == "POST":
+        form = CommentsForm(request.POST)
+        if form.is_valid():
+            comment = Commentaire()
+            comment.user = request.user.id
+            comment.twitt_id = idTwitt
+            comment.commentaire = form.cleaned_data['commentaire']
+            comment.save()
+            return redirect('/')
+    else:
+        form = CommentsForm()
+    return redirect('/error')
+
+def deletecomment(request,idComment):
+    comment = Commentaire.objects.get(idCommentaire=idComment)
+    comment.delete()
+    return redirect('/')

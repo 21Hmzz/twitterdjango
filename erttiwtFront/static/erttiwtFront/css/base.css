@@ -1,8 +1,10 @@
 
+
+
+
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,200;0,400;1,300;1,400;1,600&display=swap');
 html,body{
-    background-color: #141d26;
-    color: #fff;
+    
     font-family: 'Source Sans Pro', sans-serif;
     width: 100%;
     padding: 0;
@@ -18,10 +20,7 @@ svg
     fill: #1DA1F2;
   }
   
-a{
-    color: #c51f5d;
-    text-decoration: none;
-}
+
 /* header */
 .header_info{
     display: flex;
@@ -40,12 +39,38 @@ a{
     display: flex;
     flex-direction: row;
     width: 100%;
+    margin-left : 250px;
 }
 
 /* sidebar */
-.toFollow{
+/* coté gauche */
+.left_side{
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
     width: 20%;
-    padding: 15px
+}
+.active_lightMode{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border: none;
+    border-radius: 20px;
+    padding: 5px 10px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    margin-bottom: 20px;
+    text-align: center  ;   
+    
+}
+.mode{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.toFollow{
 }
 .toFollow .profil_image{
     width: 50px;
@@ -64,8 +89,6 @@ a{
     margin-right: 10px;
 }
 .toFollow .follow {
-    background-color: #c51f5d;
-    color: #fff;
     border: none;
     border-radius: 20px;
     padding: 5px 10px;
@@ -74,15 +97,50 @@ a{
 }
 /* Card des tweets */
 .liste_tweet {
+    margin-left: 20px;
     display: flex;
     flex-direction: column;
     padding: 15px;
     width: 40%;
 
 }
+.formclass {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    margin-bottom: 10px;
+  }
+
+  .formclass textarea {
+    border: none;
+    outline: none;
+    resize: none;
+    width: 100%;
+    height: 100px;
+    border-radius: 10px;
+    font-size: 16px;
+    font-family: "Poppins", sans-serif;
+  }
+
+  .liste_commentaire {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+  }
+
+  .liste_commentaire .profil_image {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
 .liste_tweet .voir_plus {
-    background-color: #c51f5d;
-    color: #fff;
     border: none;
     border-radius: 20px;
     padding: 5px 10px;
@@ -93,7 +151,6 @@ a{
 
 .tweet{
   
-    background-color: #1b2836;
     border-radius: 10px;
     padding: 20px;
     margin-bottom: 20px;
@@ -112,7 +169,6 @@ a{
 }
 .tweet .tweet_header .tweet_date{
     font-size: 0.8rem;
-    color: #8899a6;
 }
 .tweet .profil_image{
     width: 50px;
@@ -154,11 +210,10 @@ a{
 .right_side{
     padding: 15px;
     display: flex;
-    align-items: center;
     flex-direction: column;
-    width: 40%;
+    width: 20%;
 }
-.right_side .connexion a{
+/* .right_side .connexion a{
     display: flex;
     align-items: center;
     background-color: #c51f5d;
@@ -180,7 +235,7 @@ a{
     font-size: 0.8rem;
     cursor: pointer;
     margin-bottom: 20px;
-}
+} */
 
 /* form login */
 
@@ -197,8 +252,6 @@ a{
     margin-bottom: 10px;
     border-radius: 20px;
     border: none;
-    background-color: #1b2836;
-    color: #fff;
 }
 .formLogin button {
     width: 50%;
@@ -206,13 +259,10 @@ a{
     margin-bottom: 10px;
     border-radius: 20px;
     border: none;
-    background-color: #c51f5d;
-    color: #fff;
     font-weight: 600;
     cursor: pointer;
 }
 .formLogin p {
-    color: #fff;
     font-size: 0.8rem;
     margin-bottom: 10px;
 }
@@ -227,30 +277,86 @@ a{
 .headernav{
     box-sizing: border-box;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
     padding: 20px;
-    background-color: #1b2836;
-    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    width: 280px;
+    height: 100vh;
+    position: fixed;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 20px;
+}
+.menu{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;    
+}
+.menu a {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 20px;
+    border: none;
+    text-decoration: none;
+    gap: 10px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.mini_profil{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    border-radius: 20px;
+    padding: 10px;
+}
+.mini_profil img{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 20px;
+    cursor: pointer;
+    padding: 5px;
+}
+.mini_profil:hover {
+}
+.userinfo_base{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+.userinfo_base i{
+}
+.logo{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 20px;
 }
 .headernav .search input{
     width: 100%;
     padding: 8px;
     border-radius: 30px;
-    height: 15px;
+    height: 25px;
     border: none;
-    background-color: #8899a6;
-    color: #fff;
    
 }
 .headernav .search {
 display: flex;
 align-items: center;
+margin-bottom: 20px;
+margin-top: 20px;
+
    
 }
 .headernav .search button {
-    background-color: #c51f5d;
-    color: #fff;
     border: none;
     border-radius: 20px;
     padding: 5px 10px;
@@ -269,16 +375,12 @@ align-items: center;
     margin-right: 20px;
     position: relative;
     top: 70px;
-    border: #fff solid 5px;
     margin-left: 15px;
 }
 .profil {
-    border: #8899a6 solid 1px;
     width: 100%;
 }
 .profil .follow_button {
-    background-color: #c51f5d;
-    color: #fff;
     border: none;
     border-radius: 20px;
     padding: 5px 10px;
@@ -291,7 +393,6 @@ align-items: center;
     
 }
 .profil .follow_button a{
-    color: #fff;
 }
 .profil .profile_content {
     padding: 20px;
@@ -308,7 +409,6 @@ align-items: center;
     display: flex;
     align-items: center;
     margin-bottom: 20px;
-    background-color: #fff;
     width: 100%;
 
 }
@@ -338,7 +438,60 @@ align-items: center;
     font-weight: 600;
     margin-right: 10px;
 }
+.profil_content{
+    margin-left: 75px;
+    width:60%
+}
+.listefollow, .listeFollower{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 10px;
+    width: 20%;
+    align-items: center;
+    padding: 10px;
+    margin: 20px;
 
+    border-radius: 20px;
+}
+.follow_you {
+    
+    font-size: 15px;
+    font-weight: 400;
+    margin-left: 10px;
+ 
+    padding: 5px;
+    border-radius: 10px;
+}
+.showFollow{
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 20px;
+    background-color: #e8e8e8;
+}
+.user_list{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    
+}
+.user_list a {
+    width:100px;
+    height:30px;
+}
+.user_list img{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 20px;
+    cursor: pointer;
+    padding: 5px;
+}
+*{
+    box-sizing: border-box;
+}
 
 .toFollow_user{
     display: flex;
@@ -346,7 +499,6 @@ align-items: center;
     margin-bottom: 10px;
     gap: 5px;
     width: 100%;
-    background-color: #1b2836;
     padding: 10px;
     border-radius: 20px;
     margin-top: 10px;
@@ -365,8 +517,6 @@ align-items: center;
     margin-bottom: 10px;
     border-radius: 20px;
     border: none;
-    background-color: #1b2836;
-    color: #fff;
     resize: none;
 }
 .NouveauTweet form button {
@@ -375,8 +525,6 @@ align-items: center;
     margin-bottom: 10px;
     border-radius: 20px;
     border: none;
-    background-color: #c51f5d;
-    color: #fff;
     font-weight: 600;
     cursor: pointer;
 }
@@ -400,17 +548,14 @@ align-items: center;
 }
 
 .text-muted{
-    color: #fff;
     font-size: 0.8rem;
     margin-bottom: 10px;
 }
 .help{
-    color: #fff;
     font-size: 0.8rem;
     margin-bottom: 10px;
 }
 .is-danger{
-    color: #fff;
     font-size: 0.8rem;
     margin-bottom: 10px;
 }
@@ -420,15 +565,21 @@ align-items: center;
 .profil_page {
     display: flex;
     flex-direction: column;
-    width: 100%;
     margin-bottom: 150px;
 }
 
 .profil_page_header {
     height: 200px;
-    background-color: #000;
     display: flex;
     padding: 10px;
+
+}
+
+.profil_page_header img {
+    width: 100%;
+    height: 100%;
+
+   
 }
 
 .profil_page_header_img {
@@ -437,31 +588,29 @@ align-items: center;
     border-radius: 50%;
     overflow: hidden;
     margin-right: 50px;
-    position: relative;
+    position: absolute;
     top: 110px;
-    border: 5px solid #fff;
 }
 
 .edit_profil {
-    position: relative;
-    top: 250px;
-    left: 75%;
     width: 150px;
+    float: right;
     height: 50px;
+    margin: 10px;
     border-radius: 20px;
-    border: 1px solid #fff;
     display: flex;
     justify-content: center;
     align-items: center;
+    font-size: 0.8rem;
+    font-weight: 400;
+    cursor: pointer;
 }
 
 .edit_profil a {
-    color: #fff;
     text-decoration: none;
 }
 
 .edit_profil:hover {
-    background-color: #eaeaea;
 
 }
 
@@ -478,14 +627,43 @@ align-items: center;
 }
 
 .profil_header_text {
-    color: #fff;
 }
 
 .profil_page_content {
     width: 100%;
     display: flex;
-    padding: 10px;
+    justify-content: center;
+   
+}
+.profil_page_content h1{
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    text-overflow: ellipsis;
+    white-space: nowrap; 
+    overflow: hidden;
+}
+.follow_btn{
+    width: 150px;
+    height: 50px;
+    margin: 10px;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.8rem;
+    font-weight: 400;
+    cursor: pointer;
+    float: right;
+    background-color: #1DA1F2;
 
+}
+.follow_btn a {
+    text-decoration: none;
+    color: white;
+}
+.follow_btn:hover{
+    background-color: #1A91DA;
 }
 
 .last_tweet {
@@ -495,7 +673,6 @@ align-items: center;
 }
 .last_tweet h1 {
     text-align: center;
-    border-bottom: 5px solid #2E7FC3;
     padding-bottom: 10px;
     border-radius: 5px;
 
@@ -505,7 +682,7 @@ align-items: center;
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 10px;
+    gap: 5px;
 }
 .last_likes{
     margin-left: 10px;
@@ -515,7 +692,6 @@ align-items: center;
 }
 .last_likes h1 {
     text-align: center;
-    border-bottom: 5px solid #2E7FC3;
     padding-bottom: 10px;
     border-radius: 5px;
 }
@@ -527,7 +703,6 @@ align-items: center;
 }
 .last_retweets h1 {
     text-align: center;
-    border-bottom: 5px solid #2E7FC3;
     padding-bottom: 10px;
     border-radius: 5px;
 }
@@ -546,7 +721,6 @@ align-items: center;
     text-decoration: none;
     z-index: 9999;
     position: absolute;
-    background-color: #1b2836;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -559,7 +733,6 @@ align-items: center;
    border-radius:  20px;
 }
 .searchresult:hover{
-    background-color: #2E7FC3;
     cursor: pointer;
 }
 .searchresultdiv{
@@ -574,11 +747,67 @@ align-items: center;
     flex-direction: column;
 }
 .nameresult span {
-    color: #fff;
     font-size: 1.3rem;
 }
 .nameresult small{
-    color: #fff;
     font-size: 0.8rem;
 }
 
+/* edit profil */
+
+.edit_profil_page {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    flex-direction: column;
+    margin-right: 10px;
+}
+.contentEdit{
+    margin-left: 75px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+form {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 10px;
+}
+
+form input[type="text"],
+[type="password"],
+[type="email"] {
+    width: 100%;
+    margin: 10px;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+form input[type="file"] {
+    margin: 10px;
+}
+
+form input[type="submit"] {
+    width: 100%;
+    margin: 10px;
+    border-radius: 5px;
+    padding: 10px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.profil_picture {
+    width: 100%;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+
+}

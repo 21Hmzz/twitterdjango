@@ -1,0 +1,316 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,200;0,400;1,300;1,400;1,600&display=swap');
+html,body{
+    background-color: #fff;
+    color: #000;
+   
+}
+a{
+    color: #1D9BF0;
+    text-decoration: none;
+}
+/* header */
+
+/* content */
+
+/* sidebar */
+/* coté gauche */
+
+
+form input[type="text"],
+[type="password"],
+[type="email"] {
+   
+    border: 1px solid black;
+   
+}
+
+
+form input[type="submit"] {
+  
+    border: 1px solid black;
+  
+    background-color: #1e90ff;
+    color: black;
+  
+}
+
+.active_lightMode{
+    background-color: #1D9BF0;
+    color: #fff;
+}
+
+.toFollow .follow {
+    background-color: #1D9BF0;
+    color: #fff;
+}
+/* Card des tweets */
+
+.liste_tweet .voir_plus {
+    background-color: #1D9BF0;
+    color: #fff;
+  
+}
+
+.tweet{
+    background-color: #fff;
+}
+
+.formLogin input {
+   
+    background-color: #EFF3F4;
+    color: #fff;
+}
+.formLogin button {
+    
+    background-color: #1D9BF0;
+    color: #fff;
+   
+}
+.formLogin p {
+    color: #000;
+   
+}
+
+.menu a {
+    color: #000;
+}
+.listefollow,.listeFollower{
+    background-color: #F7F9F9
+}
+.follow_you {
+    color: #000;
+    
+    background-color: #E8E8E8;
+  
+}
+.user_list a {
+  
+    color: #fff;
+}
+
+.follow_btn{
+    width: 150px;
+    height: 50px;
+    margin: 10px;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.8rem;
+    font-weight: 400;
+    cursor: pointer;
+    float: right;
+    background-color: #1DA1F2;
+
+}
+.follow_btn a {
+    text-decoration: none;
+    color: white;
+}
+.follow_btn:hover{
+    background-color: #1A91DA;
+}
+.menu a:hover {
+    color:#fff;
+    background-color: #1D9BF0;
+}
+.mini_profil img{
+  
+    border: 2px solid #fff;
+}
+.mini_profil:hover {
+    background-color: #1D9BF0;
+}
+.mini_profil a{
+    color: #000 !important;
+   
+}
+.linktoprofil{
+    color: #000 !important;
+   
+
+}
+
+
+.formclass {
+  
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  }
+
+
+.liste_commentaire {
+  
+    background-color: #EFF3F4;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+
+  }
+
+.userinfo_base{
+    color: #fff;
+   
+}
+.userinfo_base i{
+  color: #ffd700;
+}
+.headernav .search input{
+  
+    background-color: #EFF3F4;
+    color: #fff;
+   
+}
+
+.headernav .search button {
+    background-color: #1D9BF0;
+    color: #fff;
+   
+}
+
+/* vue profile home */
+
+.profil {
+    border: #8899a6 solid 1px;
+    
+}
+.profil .follow_button {
+    background-color: #1D9BF0;
+    color: #fff;
+   
+    
+}
+.profil .follow_button a{
+    color: #fff;
+}
+
+.profil_header  {
+   
+    background-color: #fff;
+    
+
+}
+
+
+
+
+
+.toFollow_user{
+    
+    background-color: #EFF3F4;
+   
+}
+.toFollow_user a{
+    color: #000 !important;
+    
+}
+
+.NouveauTweet form textarea {
+  
+    background-color: #EFF3F4;
+    color: #fff;
+    
+}
+.NouveauTweet form button {
+   
+    background-color: #1D9BF0;
+    color: #fff;
+    
+}
+
+/* formulaire inscription */
+
+
+
+
+.text-muted{
+    color: #fff;
+  
+}
+.help{
+    color: #fff;
+ 
+}
+.is-danger{
+    color: #fff;
+  
+}
+
+/* profil page */
+
+
+
+.profil_page_header_img {
+ 
+    border: 5px solid #fff;
+}
+
+.edit_profil {
+   
+    border: 1px solid #000;
+   
+}
+
+.edit_profil a {
+    color: #000;
+    
+}
+
+.edit_profil:hover {
+    background-color: #eaeaea;
+
+}
+
+
+
+
+.profil_header_text {
+    color: #000;
+}
+
+
+
+
+.last_tweet h1 {
+  
+    border-bottom: 5px solid #2E7FC3;
+   
+
+}
+
+
+
+.last_likes h1 {
+   
+    border-bottom: 5px solid #2E7FC3;
+   
+}
+
+.last_retweets h1 {
+    
+    border-bottom: 5px solid #2E7FC3;
+   
+}
+
+
+/* search result ajax */
+.ui-autocomplete{
+    
+    background-color: #EFF3F4;
+   
+}
+
+.searchresult:hover{
+    background-color: #2E7FC3;
+   
+}
+
+
+.nameresult span {
+    color: #fff;
+    
+}
+.nameresult small{
+    color: #fff;
+    
+}
+

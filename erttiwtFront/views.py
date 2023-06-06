@@ -1,13 +1,22 @@
 from django.shortcuts import render,redirect
 from erttiwtFront.models import Twitt,Commentaire,Abonnements,TweetLike,TweetRetweet
-from erttiwtBack.models import userProfilPictures
+from erttiwtBack.models import userProfilPictures,userCoverPictures
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from erttiwtBack.forms import TwittForm
+from erttiwtBack.forms import TwittForm,CommentsForm,EditProfilForm,UserRegisterForm
+from django.http import HttpResponseRedirect
 
 # Create your views here.
 
 def index(request):
+
+    color_theme = request.COOKIES.get('mode')
+    if color_theme == None:
+        color_theme = 'dd'
+    
+    commentsForm = CommentsForm()
+
+    commentaires = Commentaire.objects.all()
 
     Twitts =  Twitt.objects.all()
     all_users = User.objects.exclude(id=request.user.id)
@@ -43,6 +52,13 @@ def index(request):
 
     for twitt in Twitts:
         twitt.commentaires = Commentaire.objects.filter(twitt=twitt.idTwitt)
+        for comment in twitt.commentaires:
+            comment.username = User.objects.get(id=comment.user).username
+            comment.first_name = User.objects.get(id=comment.user).first_name
+            if userProfilPictures.objects.filter(user=comment.user).exists():
+                comment.picture = userProfilPictures.objects.get(user=comment.user).profilPicture
+
+        twitt.is_verified = User.objects.get(id=twitt.user).is_staff
 
         if userProfilPictures.objects.filter(user=twitt.user).exists():
             twitt.picture = userProfilPictures.objects.get(user=twitt.user).profilPicture
@@ -52,18 +68,57 @@ def index(request):
                 twitt.likeParUser = True
             if TweetRetweet.objects.filter(user=request.user,tweet=twitt).exists():
                 twitt.retweetParUser = True
+        twitt.first_name = User.objects.get(id=twitt.user).first_name
+        twitt.iduser = User.objects.get(id=twitt.user).id
         twitt.user = User.objects.get(id=twitt.user).username
+        
         
 
 
-    return render(request, 'erttiwtFront/index.html', {'Tweets': Twitts, 'users': all_users,'twittForm':twittForm,'current_user':current_user,'user_follow':user_follow,'user_follower':user_follower,'current_picture':current_picture})
+    return render(request, 'erttiwtFront/index.html', {'commentaires':commentaires,'Tweets': Twitts, 'users': all_users,'twittForm':twittForm,'current_user':current_user,'user_follow':user_follow,'user_follower':user_follower,'current_picture':current_picture,'color_theme':color_theme,'commentsForm':commentsForm})
 
 def profil (request,username):
     if request.user.is_authenticated:
 
         userinfos = User.objects.get(username=username)
+        userinfos.is_verified = User.objects.get(username=username).is_staff
         user_follow = Abonnements.objects.filter(user=userinfos.id)
         user_follower = Abonnements.objects.filter(abonnement=userinfos.id)
+        
+        for user in user_follow:
+            if userProfilPictures.objects.filter(user=user.abonnement).exists():
+                user.picture = userProfilPictures.objects.get(user=user.abonnement).profilPicture
+            user.username = User.objects.get(id=user.abonnement).username
+            user.first_name = User.objects.get(id=user.abonnement).first_name
+            if request.user.username == user.username:
+                user.is_me = True
+            else:
+                user.is_me = False
+
+        for user in user_follower:
+            if userProfilPictures.objects.filter(user=user.user).exists():
+                user.picture = userProfilPictures.objects.get(user=user.user).profilPicture
+            user.username = User.objects.get(id=user.user).username
+            user.first_name = User.objects.get(id=user.user).first_name
+            user.is_verified = User.objects.get(id=user.user).is_staff
+            if request.user.username == user.username:
+                user.is_me = True
+            else:
+                user.is_me = False
+
+            
+
+        follow_you = Abonnements.objects.filter(abonnement=request.user.id,user=userinfos.id)
+        if follow_you.exists():
+            follow_you = True
+        my_follow = Abonnements.objects.filter(user=request.user.id)
+        for follow in my_follow:
+            if Abonnements.objects.filter(user=request.user.id,abonnement=userinfos.id).exists():
+                my_follow = True
+            else:
+                my_follow = False
+
+        my_follower = Abonnements.objects.filter(abonnement=request.user.id)
         TweetLike_list = TweetLike.objects.filter(user=userinfos.id)
         TweetRetweet_list = TweetRetweet.objects.filter(user=userinfos.id)
         Twitts = Twitt.objects.filter(user=userinfos.id)
@@ -73,6 +128,8 @@ def profil (request,username):
         
         if userProfilPictures.objects.filter(user=userinfos.id).exists():
             userinfos.picture = userProfilPictures.objects.get(user=userinfos.id).profilPicture
+        if userCoverPictures.objects.filter(user=userinfos.id).exists():
+            userinfos.cover = userCoverPictures.objects.get(user=userinfos.id).coverPicture
             
         
         for tweetRetweet in TweetRetweet_list:
@@ -88,7 +145,7 @@ def profil (request,username):
                         tweetRetweet.tweet.likeParUser = True
                     if TweetRetweet.objects.filter(user=request.user,tweet=tweetRetweet.tweet).exists():
                         tweetRetweet.tweet.retweetParUser = True
-                tweetRetweet.tweet.user = User.objects.get(id=tweetRetweet.tweet.user).username
+                tweetRetweet.tweet.user = User.objects.get(id=tweetRetweet.tweet.user)
             
         for tweetLike in TweetLike_list:
             if Twitt.objects.filter(idTwitt=tweetLike.tweet.idTwitt).exists():
@@ -103,7 +160,7 @@ def profil (request,username):
                         tweetLike.tweet.likeParUser = True
                     if TweetRetweet.objects.filter(user=request.user,tweet=tweetLike.tweet).exists():
                         tweetLike.tweet.retweetParUser = True
-                tweetLike.tweet.user = User.objects.get(id=tweetLike.tweet.user).username
+                tweetLike.tweet.user = User.objects.get(id=tweetLike.tweet.user)
                     
             
 
@@ -117,7 +174,7 @@ def profil (request,username):
             twitt.commentaires = Commentaire.objects.filter(twitt=twitt.idTwitt)
             if userProfilPictures.objects.filter(user=twitt.user).exists():
                 twitt.picture = userProfilPictures.objects.get(user=twitt.user).profilPicture
-                twitt.user = User.objects.get(id=twitt.user).username
+                twitt.user = User.objects.get(id=twitt.user)
                 twitt.likes = TweetLike.objects.filter(tweet=twitt.idTwitt).count()
                 twitt.retwitts = TweetRetweet.objects.filter(tweet=twitt.idTwitt).count()
             
@@ -133,6 +190,6 @@ def profil (request,username):
 
         
 
-        return render(request, 'erttiwtFront/profil.html', {'userinfos': userinfos,'Tweets': Twitts,'user_follow':user_follow,'user_follower':user_follower,'TweetLike_list':TweetLike_list ,'TweetRetweet_list':TweetRetweet_list})
+        return render(request, 'erttiwtFront/profil.html', {'userinfos': userinfos,'Tweets': Twitts,'user_follow':user_follow,'user_follower':user_follower,'TweetLike_list':TweetLike_list ,'TweetRetweet_list':TweetRetweet_list,'my_follow':my_follow,'my_follower':my_follower,'follow_you':follow_you})
     else:
         return redirect('login')
