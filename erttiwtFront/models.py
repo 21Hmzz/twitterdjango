@@ -61,5 +61,13 @@ class Messages(models.Model):
     date = models.DateTimeField(auto_now_add=True)
     user = models.IntegerField()
     destinataire = models.IntegerField()
+    lu = models.BooleanField(default=False)
     def __str__(self):
         return self.message + " Par : " + self.user + " à " + self.destinataire
+
+class Conversation(models.Model):
+    idConversation = models.AutoField(primary_key=True)
+    user1 = models.IntegerField()
+    user2 = models.IntegerField()
+    def __str__(self):
+        return self.user1 + " et " + self.user2

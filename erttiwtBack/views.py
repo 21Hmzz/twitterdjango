@@ -72,6 +72,7 @@ def retweet(request,idTwitt):
         return redirect('/')
 
 def register(request):
+    
     if request.method == "POST":
         form = UserRegisterForm(request.POST)
         if form.is_valid():

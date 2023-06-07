@@ -1,9 +1,12 @@
 {% extends "erttiwtFront/base.html" %} {% load static %} {% block title%}
 Erttiwt {% endblock %} {% block content %}
 <div class="contentLogin">
+  <h1>
+    Nombre de fois sur cette page : {{nombre}}
+  </h1>
   <h2>Inscrivez vous !</h2>
   <form action="{% url 'register' %}" method="post" class="formLogin">
-    {% csrf_token %} 
+    {% csrf_token %}
     {% for field in form %}
     <div class="form-register">
       <label for="{{ field.id_for_label }}">{{ field.label }}</label>

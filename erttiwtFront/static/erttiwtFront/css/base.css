@@ -178,8 +178,7 @@ svg
     margin-right: 20px;
 }
 .tweet .tweet_content{
-    display: flex;
-    align-items: center;
+    word-wrap: break-word;
 }
 .tweet .tweet_likes_retweets{
     display: flex;
@@ -342,7 +341,6 @@ svg
 
 }
 .liste_message_page_list_item:hover{
-    background-color: #c51f5d;
     cursor: pointer;
 }
 
@@ -351,13 +349,11 @@ svg
     border-radius: 50%;
 }
 hr.message_divider{
-    color: #c51f5d;
 
 }
 hr.divider{
     height: 5px;
     border-radius: 20px;
-    background-color: #e8e8e8;
     border: none;
     margin-bottom: 10px;
 }
@@ -384,7 +380,6 @@ hr.divider{
 }
 
 .message_conversation{
-    background-color: #e8e8e8;
     padding: 15px;
     width: 500px;
     margin-top: 100px;
@@ -399,15 +394,11 @@ hr.divider{
 }
 .message_conversation_item .message_conversation_item_content{
   
-    background-color: #c51f5d;
-    color: #fff;
     border-radius: 20px;
     opacity: 0.8;
     padding: 5px 10px;
 }
 .message_conversation_item_content{
-    background-color: #fff;
-    color: #fff;
     border-radius: 20px;
     opacity: 0.8;
     padding: 5px 10px;
@@ -424,8 +415,6 @@ hr.divider{
     cursor: pointer;
 }
 .message_conversation_item_self .message_conversation_item_content{
-    background-color: #1A91DA;
-    color: #fff;
     border-radius: 20px;
     opacity: 0.8;
     padding: 5px 10px;
@@ -438,6 +427,7 @@ hr.divider{
     align-items: center;
     justify-content: center;
     width: 50%;
+    gap: 10px;
 }
 .formLogin input{
     width: 100% !important;
@@ -660,7 +650,6 @@ margin-top: 20px;
     padding: 10px;
     cursor: pointer;
     border-radius: 20px;
-    background-color: #e8e8e8;
 }
 .user_list{
     display: flex;
@@ -965,15 +954,15 @@ margin-top: 20px;
     height: 100vh;
 }
 
-form {
+.formclass form {
     height: 100%;
     display: flex;
     justify-content: center;
     flex-direction: column;
-    padding: 10px;
+    padding: 10px; */
 }
 
-form input[type="text"],
+.formclass form input[type="text"],
 [type="password"],
 [type="email"] {
     width: 100%;
@@ -982,11 +971,11 @@ form input[type="text"],
     padding: 10px;
 }
 
-form input[type="file"] {
+.formclass form input[type="file"] {
     margin: 10px;
-}
+} 
 
-form input[type="submit"] {
+.formclass form input[type="submit"] {
     width: 100%;
     margin: 10px;
     border-radius: 5px;
@@ -1003,4 +992,6 @@ form input[type="submit"] {
     align-items: center;
     gap: 10px;
 
+
 }
+

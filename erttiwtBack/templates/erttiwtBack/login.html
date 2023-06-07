@@ -2,8 +2,9 @@
 
 <div class="contentLogin">
   <h2>Connectez vous !</h2>
+
   <form action="{% url 'login' %}" method="post" class="formLogin">
-    {% csrf_token %} {{ form.as_p }}
+    {% csrf_token %} {{ form }}
     <button type="submit">Se connecter</button>
   </form>
   <a href="{% url  'register' %}">Pas encore inscrit ?</a>

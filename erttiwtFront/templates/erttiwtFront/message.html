@@ -19,14 +19,14 @@
 
             {% else %}
 
-            {% for message in messages_tweet %}
+            {% for message in conversations %}
 
             <a href="/messages/{{ message.idConversation }}" class="liste_message_page_list_item">
                 <div class="liste_message_page_list_item_image">
 
                     {% if message.picture %}
-                    <img src="{% get_media_prefix %}{{ message.picture.profilPicture }}" alt="image de profil"
-                        class="profil_image" width="150" />
+                    <img src="{% get_media_prefix %}{{ message.picture }}" alt="image de profil" class="profil_image"
+                        width="150" />
                     {% else %}
                     <img src="{% static 'erttiwtFront/img/defaut.jpg' %}" alt="image de profil" class="profil_image" />
                     {% endif %}
@@ -41,8 +41,16 @@
                             <p>{{ message.date|date:"d/m/Y" }}</p>
                         </div>
                     </div>
-                    <div class="liste_message_page_list_item_content_message">
-                        <p>{{ message.message }}</p>
+                    <div class="liste_message_page_list_item_statut_read">
+                        {% if message.lu %}
+                        <div class="liste_message_page_list_item_statut_read_icon">
+                            <i class='bx bx-check-double' style="color: cyan;"></i>
+                        </div>
+                        {% else %}
+                        <div class="liste_message_page_list_item_statut_read_icon">
+                            <i class='bx bx-check'></i>
+                        </div>
+                        {% endif %}
                     </div>
                 </div>
             </a>

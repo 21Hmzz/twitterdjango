@@ -128,7 +128,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
-MEDIA_ROOT = "/home/hbella/django/erttiwt/media"
+MEDIA_ROOT = "C:/Users/rechs/Desktop/IUT/django/erttiwt/media"
 
 
 # Default primary key field type

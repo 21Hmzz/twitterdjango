@@ -78,6 +78,24 @@
                 <a href="{% url 'login' %}"><i class='bx bx-log-in bx-md'></i> Connexion</a>
                 <a href="{% url 'register' %}"><i class='bx bx-user-plus bx-md'></i> Inscription</a>
                 {% endif %}
+                <div class="mode">
+
+                    {% if color_theme == 'dark' %}
+                    <div class="light_mode">
+                        <button class="active_lightMode" id="setLightMode">
+                            <i class="bx bx-moon bx-sm"></i>
+                            Mode clair
+                        </button>
+                    </div>
+                    {% else %}
+                    <div class="light_mode">
+                        <button class="active_lightMode" id="setDarkMode">
+                            <i class="bx bx-moon bx-sm"></i>
+                            Mode sombre
+                        </button>
+                    </div>
+                    {% endif %}
+                </div>
             </div>
         </div>
 
@@ -86,7 +104,7 @@
 
             {% if current_picturebase.profilPicture %}
             <img src="{% get_media_prefix %}{{ current_picturebase.profilPicture }}" alt="image de profil"
-                class="profil_image"  />
+                class="profil_image" />
             {% else %}
             <img src="{% static 'erttiwtFront/img/defaut.jpg' %}" alt="image de profil" class="profil_image" />
             {% endif %}
@@ -111,6 +129,7 @@
     <main>
         {% block content %} {% endblock %}
     </main>
+    {% if user.is_authenticated %}
     <div class="messages">
 
         <div class="messages_headers">
@@ -132,30 +151,31 @@
 
             {% for message in messages_tweet %}
 
-                <a href="/messages/{{ message.idConversation}}"  class="messages_list_item">
-                    <div class="messages_list_item_image">
+            <a href="/messages/{{ message.idConversation}}" class="messages_list_item">
+                <div class="messages_list_item_image">
 
-                        {% if message.picture %}
-                        <img src="{% get_media_prefix %}{{ message.picture.profilPicture }}" alt="image de profil" 
-                            class="profil_image"  />
-                        {% else %}
-                        <img src="{% static 'erttiwtFront/img/defaut.jpg' %}" alt="image de profil" class="profil_image" />
-                        {% endif %}
+                    {% if message.picture %}
+                    <img src="{% get_media_prefix %}{{ message.picture.profilPicture }}" alt="image de profil"
+                        class="profil_image" />
+                    {% else %}
+                    <img src="{% static 'erttiwtFront/img/defaut.jpg' %}" alt="image de profil" class="profil_image" />
+                    {% endif %}
 
+                </div>
+
+                <div class="messages_list_item_content">
+                    <div class="messages_list_item_content_text">
+                        <p>{{message.message}}</p>
                     </div>
-
-                    <div class="messages_list_item_content">
-                        <div class="messages_list_item_content_text">
-                            <p>{{message.message}}</p>
-                        </div>
-                        <small>{{message.date|date:"d/m/Y"}}</small>
-                    </div>
-                </a>
+                    <small>{{message.date|date:"d/m/Y"}}</small>
+                </div>
+            </a>
             {% endfor %}
             {% endif %}
         </div>
-       
+
     </div>
+    {% endif %}
 </body>
 
 </html>

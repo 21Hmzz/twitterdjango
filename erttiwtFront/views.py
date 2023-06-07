@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from erttiwtFront.models import Twitt,Commentaire,Abonnements,TweetLike,TweetRetweet,Messages
+from erttiwtFront.models import Twitt,Commentaire,Abonnements,TweetLike,TweetRetweet,Messages,Conversation
 from erttiwtBack.models import userProfilPictures,userCoverPictures
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -13,7 +13,7 @@ def index(request):
 
     color_theme = request.COOKIES.get('mode')
     if color_theme == None:
-        color_theme = 'dd'
+        color_theme = 'dark'
     
     commentsForm = CommentsForm()
 
@@ -211,14 +211,26 @@ def messages (request) :
         userinfos.is_following = False
         userinfos.is_follower = False
 
-        messages_list = Messages.objects.filter(Q(user=userinfos.id) | Q(destinataire=userinfos.id))
-        for message in messages_list:
-            if userProfilPictures.objects.filter(user=message.user).exists():
-                message.picture = userProfilPictures.objects.get(user=message.user).profilPicture
-            message.username = User.objects.get(id=message.user).username
-            message.first_name = User.objects.get(id=message.user).first_name
+        conversations = Conversation.objects.filter(Q(user1=user.id) | Q(user2=user.id))
+        for conversation in conversations:
+            lastmessage = Messages.objects.filter(idConversation=conversation.idConversation).last()
+            conversation.lu = lastmessage.lu
+            if lastmessage.user == user.id:
+                conversation.lastmessage = "Vous : "+lastmessage.message
+            else:
+                conversation.lastmessage = lastmessage.message
+            conversation.date = lastmessage.date
+            destinataire = conversation.user1
+            destinataire_user = User.objects.get(id=destinataire)
+            conversation.username = destinataire_user.username
+            conversation.first_name = destinataire_user.first_name
+            if userProfilPictures.objects.filter(user=destinataire).exists():
+                conversation.picture = userProfilPictures.objects.get(user=destinataire).profilPicture
+           
+
+       
         
-        return render(request, 'erttiwtFront/message.html', {'userinfos': userinfos,'messages_list':messages_list})
+        return render(request, 'erttiwtFront/message.html', {'userinfos': userinfos,'conversations':conversations})
             
     else:
         return redirect('login')
@@ -247,12 +259,31 @@ def messagesRead(request,idConversation):
     userinfos.is_me = True
     userinfos.is_following = False
     userinfos.is_follower = False
+    conversations = Conversation.objects.filter(Q(user1=user.id) | Q(user2=user.id))
+    for conversation in conversations:
+            lastmessage = Messages.objects.filter(idConversation=conversation.idConversation).last()
+            conversation.lu = lastmessage.lu
+            if lastmessage.user == user.id:
+                conversation.lastmessage = "Vous : "+lastmessage.message
+            else:
+                conversation.lastmessage = lastmessage.message
+            conversation.date = lastmessage.date
+            destinataire = conversation.user1
+            destinataire_user = User.objects.get(id=destinataire)
+            conversation.username = destinataire_user.username
+            conversation.first_name = destinataire_user.first_name
+            if userProfilPictures.objects.filter(user=destinataire).exists():
+                conversation.picture = userProfilPictures.objects.get(user=destinataire).profilPicture
+           
 
     messages_list = Messages.objects.filter(Q(user=userinfos.id) | Q(destinataire=userinfos.id))
     for message in messages_list:
+        if message.user == userinfos.id:
+            message.lu = True
+            message.save()
         if userProfilPictures.objects.filter(user=message.user).exists():
             message.picture = userProfilPictures.objects.get(user=message.user).profilPicture
         message.username = User.objects.get(id=message.user).username
         message.first_name = User.objects.get(id=message.user).first_name
 
-    return render(request, 'erttiwtFront/message.html', {'userinfos': userinfos,'messages_list':messages_list,'messageread':messageread})
+    return render(request, 'erttiwtFront/message.html', {'userinfos': userinfos,'messages_list':messages_list,'messageread':messageread,'conversations':conversations})

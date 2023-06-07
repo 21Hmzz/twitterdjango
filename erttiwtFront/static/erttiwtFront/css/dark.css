@@ -160,14 +160,19 @@ form input[type="submit"] {
     margin: 5px;
     color: #c51f5d;
 }
-.messages_list_item_content h4,p{
+.messages_list_item_content h4,.messages_list_item_content p{
     color: #fff;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
     width: 150px;
 }
-
+.showFollow{
+    background-color:#c51f5d;
+}
+.no_tweet{
+    color: #fff;
+}
 
 /* form login */
 
@@ -299,7 +304,7 @@ form input[type="submit"] {
 /* profil page */
 
 
-.user_list a,p {
+.user_list a,.user_list p {
   
     color: #fff;
 }
@@ -323,7 +328,7 @@ form input[type="submit"] {
 
 
   .liste_commentaire {
-  
+    color: #fff;
     background-color: #1B2836;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 
@@ -419,3 +424,48 @@ form input[type="submit"] {
     color: #fff;
 }
 
+/*  message */
+
+
+
+.liste_message_page_list_item:hover{
+    background-color: #c51f5d;
+}
+.liste_message_page_list_item {
+    color: #fff !important;
+}
+
+hr.message_divider{
+    color: #c51f5d;
+
+}
+hr.divider{
+ 
+    background-color: #e8e8e8;
+   
+}
+
+
+.message_conversation{
+    background-color: #e8e8e8;
+   
+}
+
+.message_conversation_item .message_conversation_item_content{
+  
+    background-color: #c51f5d;
+    color: #fff;
+    
+}
+.message_conversation_item_content{
+    background-color: #fff;
+    color: #fff;
+ 
+}
+
+
+.message_conversation_item_self .message_conversation_item_content{
+    background-color: #1A91DA;
+    color: #fff;
+   
+}

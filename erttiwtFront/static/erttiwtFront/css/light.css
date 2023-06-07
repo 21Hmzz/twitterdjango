@@ -9,6 +9,10 @@ a{
     color: #1D9BF0;
     text-decoration: none;
 }
+.showFollow{
+    background-color: #1D9BF0;
+    color: #fff;
+}
 /* header */
 
 /* content */
@@ -393,10 +397,13 @@ form input[type="submit"] {
     right: 0;
     margin: 5px;
 }
-.messages_list_item_content h4,p{
+.messages_list_item_content h4,.messages_list_item_content p{
     color: #000;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
     width: 150px;
+}
+.messages_headers_title{
+    color: #fff;
 }
