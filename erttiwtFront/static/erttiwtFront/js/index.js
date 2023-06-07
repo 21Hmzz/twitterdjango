@@ -68,7 +68,13 @@ $(".comments").on("click", function () {
   }
 });
 
-
+$(".messages_headers").on('click', function(){
+  if ($('.messages_list').is(":visible")){
+    $('.messages_list').hide();
+  }else{
+    $('.messages_list').show();
+  }
+});
 
 
     console.log("ready!");

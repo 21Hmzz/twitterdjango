@@ -59,7 +59,7 @@ form input[type="submit"] {
 .formLogin input {
    
     background-color: #EFF3F4;
-    color: #fff;
+    color: #000;
 }
 .formLogin button {
     
@@ -68,6 +68,10 @@ form input[type="submit"] {
    
 }
 .formLogin p {
+    color: #000;
+   
+}
+.formLogin {
     color: #000;
    
 }
@@ -157,7 +161,7 @@ form input[type="submit"] {
 .headernav .search input{
   
     background-color: #EFF3F4;
-    color: #fff;
+    color: #000;
    
 }
 
@@ -207,7 +211,7 @@ form input[type="submit"] {
 .NouveauTweet form textarea {
   
     background-color: #EFF3F4;
-    color: #fff;
+    color: rgb(0, 0, 0);
     
 }
 .NouveauTweet form button {
@@ -314,3 +318,85 @@ form input[type="submit"] {
     
 }
 
+/* message */
+
+
+.messages{
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 20%;
+    background-color: #1A91DA;
+    border-radius: 20px 20px 0px 0px;
+    margin-right: 10px;
+}
+.messages_headers{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px; 
+    cursor: pointer;  
+}
+.messages_headers i{
+    color: #fff;
+}
+.messages_list{
+    display: none;
+    height: 500px;
+}
+.messages_list_empty{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    
+}
+.messages_list_item{
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    cursor: pointer;
+    background-color: #e8e8e8;
+    color: #000;
+}
+.messages_list_item_image h4{
+    color: #000;
+
+}
+.messages_list_item_image{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.messages_list_item_image img{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+  
+}
+.messages_list_item_content_title{
+    display: flex;
+    align-items: center;
+}
+.messages_list_item_content{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position:relative;
+    width: 100%;
+}
+.messages_list_item_content small{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin: 5px;
+}
+.messages_list_item_content h4,p{
+    color: #000;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 150px;
+}

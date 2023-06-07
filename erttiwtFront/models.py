@@ -53,3 +53,13 @@ class TweetRetweet(models.Model):
     
     def __str__(self):
         return self.user + " retweet " + self.tweet
+
+class Messages(models.Model):
+    idMessage = models.AutoField(primary_key=True)
+    idConversation = models.IntegerField()
+    message = models.CharField(max_length=1280)
+    date = models.DateTimeField(auto_now_add=True)
+    user = models.IntegerField()
+    destinataire = models.IntegerField()
+    def __str__(self):
+        return self.message + " Par : " + self.user + " à " + self.destinataire

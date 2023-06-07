@@ -1,0 +1,93 @@
+{% extends 'erttiwtFront/base.html' %} {% load static %} {% block title%}
+{{user.username }} | Mes Messages{% endblock %}
+{% block content %}
+
+<div class="content">
+    <div class="liste_message_page">
+        <div class="liste_message_page_header">
+            <h3>Mes Messages</h3>
+        </div>
+        <hr class="divider">
+
+
+        <div class="liste_message_page_list">
+            {% if messages_tweet|length == 0 %}
+
+            <div class="liste_message_page_list_empty">
+                <p>Vous n'avez pas de messages</p>
+            </div>
+
+            {% else %}
+
+            {% for message in messages_tweet %}
+
+            <a href="/messages/{{ message.idConversation }}" class="liste_message_page_list_item">
+                <div class="liste_message_page_list_item_image">
+
+                    {% if message.picture %}
+                    <img src="{% get_media_prefix %}{{ message.picture.profilPicture }}" alt="image de profil"
+                        class="profil_image" width="150" />
+                    {% else %}
+                    <img src="{% static 'erttiwtFront/img/defaut.jpg' %}" alt="image de profil" class="profil_image" />
+                    {% endif %}
+
+                </div>
+                <div class="liste_message_page_list_item_content">
+                    <div class="liste_message_page_list_item_content_header">
+                        <div class="liste_message_page_list_item_content_header_title">
+                            <h4>{{ message.username }}</h4>
+                        </div>
+                        <div class="liste_message_page_list_item_content_header_date">
+                            <p>{{ message.date|date:"d/m/Y" }}</p>
+                        </div>
+                    </div>
+                    <div class="liste_message_page_list_item_content_message">
+                        <p>{{ message.message }}</p>
+                    </div>
+                </div>
+            </a>
+            <hr class="message_divider">
+
+            {% endfor %}
+
+            {% endif %}
+
+        </div>
+    </div>
+    <div class="message_conversation">
+
+        {% for message in messageread %}
+        {% if message.username == user.username %}
+        <div class="message_conversation_item_self">
+            <div class="message_conversation_item_image">
+                {% if message.picture %}
+                <img src="{% get_media_prefix %}{{ message.picture }}" alt="image de profil" class="profil_image" />
+                {% else %}
+                <img src="{% static 'erttiwtFront/img/defaut.jpg' %}" alt="image de profil" class="profil_image" />
+                {% endif %}
+            </div>
+            <div class="message_conversation_item_content">
+                <p>{{message.message}}</p>
+            </div>
+        </div>
+        {% else %}
+        <div class="message_conversation_item">
+
+            <div class="message_conversation_item_image">
+                {% if message.picture %}
+                <img src="{% get_media_prefix %}{{ message.picture }}" alt="image de profil" class="profil_image" />
+                {% else %}
+                <img src="{% static 'erttiwtFront/img/defaut.jpg' %}" alt="image de profil" class="profil_image" />
+                {% endif %}
+            </div>
+            <div class="message_conversation_item_content">
+                <p>{{message.message}}</p>
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+
+    </div>
+</div>
+
+{% endblock %}

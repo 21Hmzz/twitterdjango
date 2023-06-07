@@ -69,6 +69,7 @@ TEMPLATES = [
                 'erttiwtFront.context_processors.getColorTheme',
                 'erttiwtFront.context_processors.getCurrentUser',
                 'erttiwtFront.context_processors.getProfilPicture',
+                'erttiwtFront.context_processors.getMessages',
             ],
         },
     },
@@ -127,7 +128,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
-MEDIA_ROOT = "C:/Users/rechs/Desktop/IUT/django/erttiwt/media"
+MEDIA_ROOT = "/home/hbella/django/erttiwt/media"
 
 
 # Default primary key field type

@@ -87,6 +87,86 @@ form input[type="submit"] {
 /* coté droit */
 
 
+.messages{
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 20%;
+    background-color: #1b2836;
+    border-radius: 20px 20px 0px 0px;
+    margin-right: 10px;
+}
+.messages_headers{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px; 
+    cursor: pointer;  
+}
+.messages_headers i{
+    color: #c51f5d;
+}
+.messages_list{
+    display: none;
+    height: 500px;
+}
+.messages_list_empty{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    
+}
+.messages_list_item{
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    cursor: pointer;
+    background-color: #353f4b   ;
+    color: #000;
+}
+.messages_list_item_image h4{
+    color: #000;
+
+}
+.messages_list_item_image{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.messages_list_item_image img{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+  
+}
+.messages_list_item_content_title{
+    display: flex;
+    align-items: center;
+}
+.messages_list_item_content{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position:relative;
+    width: 100%;
+}
+.messages_list_item_content small{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin: 5px;
+    color: #c51f5d;
+}
+.messages_list_item_content h4,p{
+    color: #fff;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 150px;
+}
 
 
 /* form login */
@@ -108,7 +188,10 @@ form input[type="submit"] {
     
 }
 
-
+.formLogin  {
+    color: #fff;
+    
+}
 
 .menu a {
    

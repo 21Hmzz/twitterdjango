@@ -5,5 +5,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('', views.index),
     path('profil/<str:username>', views.profil),
+    path('messages/<int:idConversation>', views.messagesRead),
+    path('messages', views.messages, name='messages'),
     
 ]

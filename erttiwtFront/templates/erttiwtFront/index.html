@@ -103,7 +103,7 @@ Erttiwt {% endblock %} {% block content %}
             </p>
             <p class="tweet_date">{{ comment.date|date:'d F Y' }} {{ comment.date|time:'H:i' }}</p>
             {% if user.is_authenticated %}
-            {% if user|stringformat:'s' == Tweet.user|stringformat:'s' %}
+            {% if user.username|stringformat:'s' == comment.username|stringformat:'s' %}
             <div>
               <a href="deletecomment/{{ comment.idCommentaire }}"><i class="bx bx-trash"></i></a>
             </div>

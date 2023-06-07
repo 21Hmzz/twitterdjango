@@ -188,6 +188,20 @@ svg
     margin-top: 20px;
     gap: 5px;
 }
+.tweet_likes_retweets_profil{
+    display: flex;
+    gap: 5px;
+}
+.tweet_likes_retweets_profil .retweet{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.tweet_likes_retweets_profil .like{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
 .tweet .tweet_likes_retweets div {
     display: flex;
     align-items: center;
@@ -237,6 +251,185 @@ svg
     margin-bottom: 20px;
 } */
 
+/* messages box en bas a droite */
+/* 
+.messages{
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 20%;
+    background-color: #1A91DA;
+    border-radius: 20px 20px 0px 0px;
+    margin-right: 10px;
+}
+.messages_headers{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px; 
+    cursor: pointer;  
+}
+.messages_headers i{
+    color: #fff;
+}
+.messages_list{
+    display: none;
+    height: 500px;
+}
+.messages_list_empty{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    
+}
+.messages_list_item{
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    cursor: pointer;
+    background-color: #e8e8e8;
+}
+
+.messages_list_item_image{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.messages_list_item_image img{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+  
+}
+.messages_list_item_content_title{
+    display: flex;
+    align-items: center;
+}
+.messages_list_item_content{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position:relative;
+    width: 100%;
+}
+.messages_list_item_content small{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin: 5px;
+}
+.messages_list_item_content h4,p{
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 150px;
+} */
+.tweet_footer{
+    width: 100%;
+}
+/* message page */
+.liste_message_page{
+    padding: 15px;
+    width: 40%;
+}
+.liste_message_page_list_item{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+}
+.liste_message_page_list_item:hover{
+    background-color: #c51f5d;
+    cursor: pointer;
+}
+
+.liste_message_page_list_item_image img{
+   
+    border-radius: 50%;
+}
+hr.message_divider{
+    color: #c51f5d;
+
+}
+hr.divider{
+    height: 5px;
+    border-radius: 20px;
+    background-color: #e8e8e8;
+    border: none;
+    margin-bottom: 10px;
+}
+.liste_message_page_list_item_content{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    width: 100%;
+}
+.liste_message_page_list_item_content_message{
+    width: 100%;
+}
+.liste_message_page_list_item_content_message p {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 500px;
+}
+.message_conversation_item_image img{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.message_conversation{
+    background-color: #e8e8e8;
+    padding: 15px;
+    width: 500px;
+    margin-top: 100px;
+    border-radius: 20px;
+}
+.message_conversation_item{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    cursor: pointer;
+}
+.message_conversation_item .message_conversation_item_content{
+  
+    background-color: #c51f5d;
+    color: #fff;
+    border-radius: 20px;
+    opacity: 0.8;
+    padding: 5px 10px;
+}
+.message_conversation_item_content{
+    background-color: #fff;
+    color: #fff;
+    border-radius: 20px;
+    opacity: 0.8;
+    padding: 5px 10px;
+}
+
+.message_conversation_item_self{
+
+    display: flex;
+    align-items: center;
+    flex-direction: row-reverse;
+    justify-content: flex-start;
+    gap: 10px;
+    padding: 10px;
+    cursor: pointer;
+}
+.message_conversation_item_self .message_conversation_item_content{
+    background-color: #1A91DA;
+    color: #fff;
+    border-radius: 20px;
+    opacity: 0.8;
+    padding: 5px 10px;
+}
 /* form login */
 
 .formLogin{
@@ -246,11 +439,11 @@ svg
     justify-content: center;
     width: 50%;
 }
-.formLogin input {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 20px;
+.formLogin input{
+    width: 100% !important;
+    padding: 10px !important;
+    margin-bottom: 10px !important;
+    border-radius: 20px !important;
     border: none;
 }
 .formLogin button {

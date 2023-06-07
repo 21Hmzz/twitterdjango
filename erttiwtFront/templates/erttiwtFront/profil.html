@@ -1,6 +1,7 @@
 {% extends 'erttiwtFront/base.html' %} {% load static %} {% block title%}
 {{user.username }} | Mon profil {% endblock %}
 {% block content %}
+
 <div class="content">
     <div class="profil_content">
         <div class="profil_page">
@@ -75,6 +76,7 @@
             </div>
         </div>
         <div class="profil_page_content">
+
             <div class="last_tweet">
                 {% if user.is_authenticated %}
                 {% if userinfos == request.user %}
@@ -85,9 +87,11 @@
 
                 {% endif %}
                 {% endif %}
+
                 {% if Tweets|length == 0 %}
                 <p class="no_tweet">Aucun tweet</p>
                 {% endif %}
+                
                 <div class="infinite-container">
                     {% for tweet in Tweets %}
 
@@ -112,11 +116,8 @@
                             </div>
                             <div class="tweet_footer">
                                 <p>{{tweet.date|date:"d F Y" }} {{ tweet.date|time:"H:i" }}</p>
-                                <div class="tweet_likes_retweets">
-                                    <div>
-                                        <i class="bx bx-comment bx-sm"></i>
-                                        <p>{{ tweet.commentaires|length }}</p>
-                                    </div>
+                                <div class="tweet_likes_retweets_profil">
+                                    
                                     <div id="{{ tweet.idTwitt }}" class="retweet">
                                         {% if tweet.retweetParUser == True %}
                                         <i class="bx bx-recycle bx-sm" style="color: green;"></i>
@@ -193,11 +194,8 @@
                             </div>
                             <div class="tweet_footer">
                                 <p>{{likes.tweet.date|date:"d F Y" }} {{ likes.tweet.date|time:"H:i" }}</p>
-                                <div class="tweet_likes_retweets">
-                                    <div>
-                                        <i class="bx bx-comment bx-sm"></i>
-                                        <p>{{ likes.tweet.commentaires|length }}</p>
-                                    </div>
+                                <div class="tweet_likes_retweets_profil">
+                                 
                                     <div id="{{ likes.tweet.idTwitt }}" class="retweet">
                                         {% if likes.tweet.retweetParUser == True %}
                                         <i class="bx bx-recycle bx-sm" style="color: green;"></i>
@@ -272,11 +270,8 @@
                             </div>
                             <div class="tweet_footer">
                                 <p>{{retweets.tweet.date|date:"d F Y" }} {{ retweets.tweet.date|time:"H:i" }}</p>
-                                <div class="tweet_likes_retweets">
-                                    <div>
-                                        <i class="bx bx-comment bx-sm"></i>
-                                        <p>{{ retweets.tweet.commentaires|length }}</p>
-                                    </div>
+                                <div class="tweet_likes_retweets_profil">
+                                  
 
                                     <div id="{{ retweets.tweet.idTwitt }}" class="retweet">
                                         {% if retweets.tweet.retweetParUser == True %}

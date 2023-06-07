@@ -1,10 +1,11 @@
 from django.shortcuts import render,redirect
-from erttiwtFront.models import Twitt,Commentaire,Abonnements,TweetLike,TweetRetweet
+from erttiwtFront.models import Twitt,Commentaire,Abonnements,TweetLike,TweetRetweet,Messages
 from erttiwtBack.models import userProfilPictures,userCoverPictures
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from erttiwtBack.forms import TwittForm,CommentsForm,EditProfilForm,UserRegisterForm
 from django.http import HttpResponseRedirect
+from django.db.models import Q
 
 # Create your views here.
 
@@ -193,3 +194,65 @@ def profil (request,username):
         return render(request, 'erttiwtFront/profil.html', {'userinfos': userinfos,'Tweets': Twitts,'user_follow':user_follow,'user_follower':user_follower,'TweetLike_list':TweetLike_list ,'TweetRetweet_list':TweetRetweet_list,'my_follow':my_follow,'my_follower':my_follower,'follow_you':follow_you})
     else:
         return redirect('login')
+
+def messages (request) :
+    if request.user.is_authenticated:
+        user = request.user
+        userinfos = User.objects.get(id=user.id)
+        userinfos.picture = userProfilPictures.objects.get(user=user.id).profilPicture
+        userinfos.cover = userCoverPictures.objects.get(user=user.id).coverPicture
+        userinfos.following = Abonnements.objects.filter(user=user.id).count()
+        userinfos.followers = Abonnements.objects.filter(abonnement=user.id).count()
+        userinfos.is_verified = User.objects.get(id=user.id).is_staff
+        userinfos.username = User.objects.get(id=user.id).username
+        userinfos.first_name = User.objects.get(id=user.id).first_name
+        userinfos.date_joined = User.objects.get(id=user.id).date_joined
+        userinfos.is_me = True
+        userinfos.is_following = False
+        userinfos.is_follower = False
+
+        messages_list = Messages.objects.filter(Q(user=userinfos.id) | Q(destinataire=userinfos.id))
+        for message in messages_list:
+            if userProfilPictures.objects.filter(user=message.user).exists():
+                message.picture = userProfilPictures.objects.get(user=message.user).profilPicture
+            message.username = User.objects.get(id=message.user).username
+            message.first_name = User.objects.get(id=message.user).first_name
+        
+        return render(request, 'erttiwtFront/message.html', {'userinfos': userinfos,'messages_list':messages_list})
+            
+    else:
+        return redirect('login')
+
+def messagesRead(request,idConversation):
+    messageread = Messages.objects.filter(idConversation=idConversation)
+    for message in messageread:
+        message.lu = True
+        message.save()
+        if userProfilPictures.objects.filter(user=message.user).exists():
+            message.picture = userProfilPictures.objects.get(user=message.user).profilPicture
+        message.username = User.objects.get(id=message.user).username
+        message.first_name = User.objects.get(id=message.user).first_name
+
+
+    user = request.user
+    userinfos = User.objects.get(id=user.id)
+    userinfos.picture = userProfilPictures.objects.get(user=user.id).profilPicture
+    userinfos.cover = userCoverPictures.objects.get(user=user.id).coverPicture
+    userinfos.following = Abonnements.objects.filter(user=user.id).count()
+    userinfos.followers = Abonnements.objects.filter(abonnement=user.id).count()
+    userinfos.is_verified = User.objects.get(id=user.id).is_staff
+    userinfos.username = User.objects.get(id=user.id).username
+    userinfos.first_name = User.objects.get(id=user.id).first_name
+    userinfos.date_joined = User.objects.get(id=user.id).date_joined
+    userinfos.is_me = True
+    userinfos.is_following = False
+    userinfos.is_follower = False
+
+    messages_list = Messages.objects.filter(Q(user=userinfos.id) | Q(destinataire=userinfos.id))
+    for message in messages_list:
+        if userProfilPictures.objects.filter(user=message.user).exists():
+            message.picture = userProfilPictures.objects.get(user=message.user).profilPicture
+        message.username = User.objects.get(id=message.user).username
+        message.first_name = User.objects.get(id=message.user).first_name
+
+    return render(request, 'erttiwtFront/message.html', {'userinfos': userinfos,'messages_list':messages_list,'messageread':messageread})
