@@ -50,6 +50,13 @@ $("#showFollower").on("click", function () {
   $(".listefollow").hide();
 
 });
+$(".message_item").animate({ scrollTop: $(".message_item").prop("scrollHeight")}, 100);
+$("#message_field").each(function () {
+  this.setAttribute("style", "height:" + (this.scrollHeight) + "px;overflow-y:hidden;");
+}).on("input", function () {
+  this.style.height = 0;
+  this.style.height = (this.scrollHeight) + "px";
+});
 
 $(".comments").on("click", function () {
   

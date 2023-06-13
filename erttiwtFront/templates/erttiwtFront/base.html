@@ -130,6 +130,8 @@
         {% block content %} {% endblock %}
     </main>
     {% if user.is_authenticated %}
+    {% if 'messages' in request.path %}
+    {% else %}
     <div class="messages">
 
         <div class="messages_headers">
@@ -175,6 +177,7 @@
         </div>
 
     </div>
+    {% endif %}
     {% endif %}
 </body>
 

@@ -1,15 +1,16 @@
 from django.shortcuts import render,redirect
 
-from erttiwtFront.models import Twitt,Commentaire,Abonnements,TweetLike,TweetRetweet
+from erttiwtFront.models import Twitt,Commentaire,Abonnements,TweetLike,TweetRetweet,Messages,Conversation
 from erttiwtBack.models import userProfilPictures,userCoverPictures
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator
-from erttiwtBack.forms import TwittForm,UserRegisterForm,EditProfilForm,CommentsForm 
+from erttiwtBack.forms import TwittForm,UserRegisterForm,EditProfilForm,CommentsForm ,MessagesForm
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 
 from django.core import serializers
 import json
+import datetime
 
 
 
@@ -196,6 +197,28 @@ def comment(request,idTwitt):
     return redirect('/error')
 
 def deletecomment(request,idComment):
+
     comment = Commentaire.objects.get(idCommentaire=idComment)
     comment.delete()
     return redirect('/')
+
+def newMessage(request,idConversation):
+    if request.method == "POST":
+        form = MessagesForm(request.POST)
+        if form.is_valid():
+            message = Messages()
+            message.user = request.user.id
+            destinataire = Conversation.objects.get(idConversation=idConversation)
+            if destinataire.user1 == request.user.id:
+                destinataire = destinataire.user2
+            else:
+                destinataire = destinataire.user1
+            message.destinataire = destinataire
+            message.idConversation = idConversation
+            message.message = form.cleaned_data['message']
+            message.date = datetime.datetime.now()
+            message.save()
+            return redirect('/messages/'+str(idConversation))
+    else:
+        form = MessagesForm()
+    return redirect('/error')

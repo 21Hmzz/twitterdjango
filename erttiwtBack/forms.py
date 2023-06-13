@@ -1,5 +1,5 @@
 from django.forms import ModelForm,Textarea
-from erttiwtFront.models import Twitt,Commentaire
+from erttiwtFront.models import Twitt,Commentaire,Messages
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django import forms
@@ -36,4 +36,12 @@ class CommentsForm(ModelForm):
         fields = ['commentaire']
         widgets = {
             'commentaire': Textarea(attrs={'placeholder':'Commentaire'}),
+        }
+
+class MessagesForm(ModelForm):
+    class Meta:
+        model = Messages
+        fields = ['message']
+        widgets = {
+            'message': Textarea(attrs={'placeholder':'Message','id':'message_field'}),
         }

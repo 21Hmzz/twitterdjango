@@ -382,8 +382,14 @@ hr.divider{
 .message_conversation{
     padding: 15px;
     width: 500px;
-    margin-top: 100px;
+    margin-top: 60px;
     border-radius: 20px;
+    height: 60vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+
 }
 .message_conversation_item{
     display: flex;
@@ -419,6 +425,58 @@ hr.divider{
     opacity: 0.8;
     padding: 5px 10px;
 }
+.new_message_field textarea{
+    width: 100%;
+    padding: 10px;
+    border-radius: 20px;
+    border: none;
+    outline: none;
+    resize: none;
+    height:30px;
+}
+.new_message_field button{
+    border: none;
+    border-radius: 20px;
+    padding: 5px 10px;
+    cursor: pointer;
+    background-color: #1A91DA;
+    color: #fff;
+    font-weight: 600;
+}
+.new_message_field button:hover{
+    background-color: #c51f5d;
+    color: #fff;
+}
+.new_message_field form {
+    width: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+
+}
+
+.message_item{
+    height: 100%;
+    overflow-y: scroll;
+    width: 100%;
+}
+.message_item::-webkit-scrollbar{
+    width: 5px;
+}
+.message_item::-webkit-scrollbar-thumb{
+    background-color: #1A91DA;
+    border-radius: 20px;
+}
+.message_item::-webkit-scrollbar-track{
+    background-color: #fff;
+    border-radius: 20px;
+}
+.message_conversation_item_content_date{
+    font-size: 0.8rem;
+    margin-top: 5px;
+}
+
 /* form login */
 
 .formLogin{

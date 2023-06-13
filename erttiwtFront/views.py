@@ -3,7 +3,7 @@ from erttiwtFront.models import Twitt,Commentaire,Abonnements,TweetLike,TweetRet
 from erttiwtBack.models import userProfilPictures,userCoverPictures
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from erttiwtBack.forms import TwittForm,CommentsForm,EditProfilForm,UserRegisterForm
+from erttiwtBack.forms import TwittForm,CommentsForm,EditProfilForm,UserRegisterForm,MessagesForm
 from django.http import HttpResponseRedirect
 from django.db.models import Q
 
@@ -285,5 +285,8 @@ def messagesRead(request,idConversation):
             message.picture = userProfilPictures.objects.get(user=message.user).profilPicture
         message.username = User.objects.get(id=message.user).username
         message.first_name = User.objects.get(id=message.user).first_name
+    
+    messageForm = MessagesForm()
 
-    return render(request, 'erttiwtFront/message.html', {'userinfos': userinfos,'messages_list':messages_list,'messageread':messageread,'conversations':conversations})
+
+    return render(request, 'erttiwtFront/message.html', {'messageForm':messageForm,'userinfos': userinfos,'messages_list':messages_list,'messageread':messageread,'conversations':conversations,'idConversation':idConversation})

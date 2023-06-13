@@ -20,4 +20,5 @@ urlpatterns = [
    path('search/', views.ajaxSearch, name='ajaxSearch'),
    path('setLightMode/', views.setLightMode, name='setLightMode'),
    path('setDarkMode/', views.setDarkMode, name='setDarkMode'),
+   path('messages/<int:idConversation>/new/', views.newMessage, name='newMessage'),
 ]
